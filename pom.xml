@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>dev.ikm.build</groupId>
+    <artifactId>parent</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
+    <name>General Parent</name>
+    <description>
+        The General Parent that helps to define the build processes that should be used across projects, regardless of.
+        Package type. This is versioned and if you want to use a different version of the pom, you can simply change
+        the parent version and it will adjust all of the properties being used throughout, as the properties and
+        plugins will be inherited by subprojects.
+    </description>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+        <!-- Clean Lifecycle -->
+        <maven.clean-plugin.version>3.0.0</maven.clean-plugin.version>
+
+        <!-- POM Lifecycle -->
+        <maven.plugin-plugin.version>3.6.1</maven.plugin-plugin.version>
+        <maven.install-plugin.version>2.5.2</maven.install-plugin.version>
+        <maven.deploy-plugin.version>3.0.0</maven.deploy-plugin.version>
+
+        <!-- Site Lifecycle -->
+        <maven.site.plugin>3.9.1</maven.site.plugin>
+
+        <!-- Command Line tooling -->
+        <maven.dependency-plugin.version>3.2.0</maven.dependency-plugin.version>
+        <maven.release-plugin.version>2.5.3</maven.release-plugin.version>
+        <maven.assembly.version>3.4.2</maven.assembly.version>
+        <maven.build-helper.plugin.version>3.2.0</maven.build-helper.plugin.version>
+        <maven.wrapper-plugin.version>3.1.1</maven.wrapper-plugin.version>
+
+        <!-- Release plugins -->
+        <maven.gpg-plugin.version>3.0.1</maven.gpg-plugin.version>
+        <maven.nexus-staging.plugin.version>1.6.7</maven.nexus-staging.plugin.version>
+        <sonar-maven-plugin.version>3.2</sonar-maven-plugin.version>
+        <semver-enforcer-rule.version>0.9.33</semver-enforcer-rule.version>
+    </properties>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+
+                <!--======================================================-->
+                <!-- Clean Lifecycle                                      -->
+                <!--======================================================-->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-clean-plugin</artifactId>
+                    <version>${maven.clean-plugin.version}</version>
+                </plugin>
+
+                <!--======================================================-->
+                <!-- POM Lifecycle                                        -->
+                <!--======================================================-->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-install-plugin</artifactId>
+                    <version>${maven.install-plugin.version}</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                    <version>${maven.deploy-plugin.version}</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>${maven-source-plugin.version}</version>
+                </plugin>
+
+                <!--======================================================-->
+                <!-- Command-Line tooling -->
+                <!--======================================================-->
+
+                <!-- Can be used to release artifacts -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-release-plugin</artifactId>
+                    <version>${maven.release-plugin.version}</version>
+                    <configuration>
+                        <checkModificationExcludes>
+                            <checkModificationExclude>pom.xml</checkModificationExclude>
+                        </checkModificationExcludes>
+                    </configuration>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-plugin-plugin</artifactId>
+                    <version>${maven.plugin-plugin.version}</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.wrapper</groupId>
+                    <artifactId>maven-wrapper</artifactId>
+                    <version>${maven.wrapper-plugin.version}</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-gpg-plugin</artifactId>
+                    <version>${maven.gpg-plugin.version}</version>
+                </plugin>
+
+            </plugins>
+        </pluginManagement>
+
+        <plugins>
+        </plugins>
+    </build>
+
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>index</report>
+                            <report>licenses</report>
+                            <report>modules</report>
+                            <report>dependency-info</report>
+                            <report>plugins</report>
+                            <report>scm</report>
+                            <report>summary</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+                <configuration>
+                    <dependencyLocationsEnabled>false</dependencyLocationsEnabled>
+                    <dependencyDetailsEnabled>false</dependencyDetailsEnabled>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jxr-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-plugin-plugin</artifactId>
+            </plugin>
+
+        </plugins>
+    </reporting>
+
+    <profiles>
+        <profile>
+            <!-- To disable this, use something like "mvn install -P!codeQuality" -->
+            <id>codeQuality</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <!--======================================================-->
+                    <!-- Code Quality Checks                                  -->
+                    <!--======================================================-->
+
+                    <!-- Dependency Check - ensure that you have not used transitive dependencies -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-dependency-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>analyze</id>
+                                <goals>
+                                    <goal>analyze-only</goal>
+                                </goals>
+                                <configuration>
+                                    <failOnWarning>true</failOnWarning>
+                                    <outputXML>true</outputXML>
+                                    <!-- ignore jsr305 for both "used but undeclared" and "declared but unused" -->
+                                    <ignoredDependencies>
+                                        <ignoredDependency>com.google.code.findbugs:jsr305</ignoredDependency>
+                                    </ignoredDependencies>
+
+                                    <!-- ignore annotations for "used but undeclared" warnings -->
+                                    <ignoredUsedUndeclaredDependencies>
+                                        <ignoredUsedUndeclaredDependency>com.google.code.findbugs:annotations</ignoredUsedUndeclaredDependency>
+                                    </ignoredUsedUndeclaredDependencies>
+
+                                    <!-- ignore annotations for "unused but declared" warnings -->
+                                    <ignoredUnusedDeclaredDependencies>
+                                        <ignoredUnusedDeclaredDependency>com.google.code.findbugs:annotations</ignoredUnusedDeclaredDependency>
+                                        <ignoredUnusedDeclaredDependency>org.hibernate:hibernate-validator</ignoredUnusedDeclaredDependency>
+                                        <ignoredUnusedDeclaredDependency>org.hibernate:hibernate-validator-annotation-processor</ignoredUnusedDeclaredDependency>
+                                        <ignoredUnusedDeclaredDependency>org.apache.geronimo.specs:geronimo-jms_1.1_spec</ignoredUnusedDeclaredDependency>
+                                    </ignoredUnusedDeclaredDependencies>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <!-- Use of Enforcer plugin to:
+                         * Not allow snapshots
+                         * Require semantic Versioning Conformance
+                     -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-enforcer-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>enforce-no-snapshots</id>
+                                <goals>
+                                    <goal>enforce</goal>
+                                </goals>
+                                <configuration>
+                                    <rules>
+                                        <requireReleaseDeps>
+                                            <message>No Snapshots Allowed!</message>
+                                        </requireReleaseDeps>
+                                        <banDistributionManagement/>
+                                        <banDuplicatePomDependencyVersions/>
+                                        <banDynamicVersions/>
+                                        <requireProperty>
+                                            <property>project.version</property>
+                                            <message>"Project version must be a semantic version."</message>
+                                            <regex>^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$</regex>
+                                            <regexMessage>"Project version must match the pattern 1.2.3."</regexMessage>
+                                        </requireProperty>
+                                    </rules>
+                                    <fail>true</fail>
+                                </configuration>
+                            </execution>
+                        </executions>
+                        <dependencies>
+                            <dependency>
+                                <groupId>org.semver</groupId>
+                                <artifactId>enforcer-rule</artifactId>
+                                <version>${semver-enforcer-rule.version}</version>
+                            </dependency>
+                        </dependencies>
+                    </plugin>
+
+                    <!-- Use of Custom plugin to force versions into properties -->
+                    <plugin>
+                        <groupId>com.github.jlgrock</groupId>
+                        <artifactId>pom-check-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <!-- Requires maven > 3.3.x -->
+                                <goals>
+                                    <goal>version-check</goal>
+                                </goals>
+                                <phase>validate</phase>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <id>sign</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <!-- Sign all artifacts with GPG -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+
+        </profile>
+    </profiles>
+
+</project>
