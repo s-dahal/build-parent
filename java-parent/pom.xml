@@ -16,6 +16,7 @@
         adjust all of the properties being used throughout, as the properties and plugins will be inherited by
         subprojects.
     </description>
+    <packaging>pom</packaging>
 
     <properties>
         <java.source.version>19</java.source.version>
@@ -24,6 +25,7 @@
         <!-- Default Lifecycle additions -->
         <maven.resources-plugin.version>3.2.0</maven.resources-plugin.version>
         <maven.surefire-plugin.version>2.22.1</maven.surefire-plugin.version>
+        <maven.failsafe-plugin.version>2.22.2</maven.failsafe-plugin.version>
         <maven.compiler-plugin.version>3.8.1</maven.compiler-plugin.version>
         <maven.jar-plugin.version>3.2.0</maven.jar-plugin.version>
         <maven.war-plugin.version>3.3.2</maven.war-plugin.version>
@@ -34,7 +36,7 @@
         <maven-checkstyle-plugin.version>3.1.2</maven-checkstyle-plugin.version>
         <maven-pmd-plugin.version>3.20.0</maven-pmd-plugin.version>
         <maven.jacoco-plugin.version>0.8.8</maven.jacoco-plugin.version>
-        <maven.spotbugs-plugin.version>4.2.3</maven.spotbugs-plugin.version>
+        <maven.spotbugs-plugin.version>4.7.3.2</maven.spotbugs-plugin.version>
         <maven.sonarqube.version>3.9.1.2184</maven.sonarqube.version>
         <jlgrock.checkstyle.version>2.1.0</jlgrock.checkstyle.version>
         <maven.pom-check-maven-plugin.version>1.0.0</maven.pom-check-maven-plugin.version>
@@ -64,29 +66,33 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
-                    <version>${maven-surefire-plugin.version}</version>
+                    <version>${maven.surefire-plugin.version}</version>
                     <configuration>
-                        <argLine>${surefireArgLine}</argLine>
+                        <argLine>${surefireArgLine} --enable-preview</argLine>
                     </configuration>
                 </plugin>
 
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-failsafe-plugin</artifactId>
-                    <version>${maven-failsafe-plugin.version}</version>
+                    <version>${maven.failsafe-plugin.version}</version>
                     <configuration>
                         <!-- Sets the VM argument line used when integration tests are run. -->
-                        <argLine>${failsafeArgLine}</argLine>
+                        <argLine>${failsafeArgLine} --enable-preview</argLine>
                     </configuration>
                 </plugin>
 
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
-                    <version>${maven-compiler-plugin.version}</version>
+                    <version>${maven.compiler-plugin.version}</version>
                     <configuration>
                         <source>${java.source.version}</source>
                         <target>${java.target.version}</target>
+                        <fork>true</fork>
+                        <compilerArgs>
+                            --enable-preview
+                        </compilerArgs>
                     </configuration>
                 </plugin>
 
@@ -115,11 +121,6 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-dependency-plugin</artifactId>
                     <version>${maven.dependency-plugin.version}</version>
-                    <configuration>
-                        <checkModificationExcludes>
-                            <checkModificationExclude>pom.xml</checkModificationExclude>
-                        </checkModificationExcludes>
-                    </configuration>
                 </plugin>
 
                 <plugin>
@@ -193,13 +194,6 @@
                     <groupId>com.github.spotbugs</groupId>
                     <artifactId>spotbugs-maven-plugin</artifactId>
                     <version>${maven.spotbugs-plugin.version}</version>
-                    <configuration>
-                        <effort>Max</effort>
-                        <threshold>Medium</threshold>
-                        <xmlOutput>true</xmlOutput>
-                        <failOnError>true</failOnError>
-                        <excludeFilterFile>${project.rootdir}/findbugs-exclude.xml</excludeFilterFile>
-                    </configuration>
                 </plugin>
 
                 <plugin>
@@ -243,7 +237,8 @@
                         <id>attach-sources</id>
                         <phase>verify</phase>
                         <goals>
-                            <goal>jar-no-fork</goal>
+                            <goal>jar</goal>
+                            <goal>test-jar</goal>
                         </goals>
                     </execution>
                 </executions>
@@ -322,13 +317,24 @@
             <!-- To disable this, use something like "mvn install -P!codeQuality" -->
             <id>codeQuality</id>
             <activation>
-                <activeByDefault>true</activeByDefault>
+                <activeByDefault>false</activeByDefault>
             </activation>
             <build>
                 <plugins>
                     <!--======================================================-->
                     <!-- Code Quality Checks                                  -->
                     <!--======================================================-->
+
+                    <!-- Dependency check -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-dependency-plugin</artifactId>
+                        <configuration>
+                            <checkModificationExcludes>
+                                <checkModificationExclude>pom.xml</checkModificationExclude>
+                            </checkModificationExcludes>
+                        </configuration>
+                    </plugin>
 
                     <!-- SPOTBUGS CHECK: Fails build if there are issues -->
                     <plugin>
@@ -341,6 +347,14 @@
                                 </goals>
                             </execution>
                         </executions>
+                        <configuration>
+                            <effort>Max</effort>
+                            <threshold>Medium</threshold>
+                            <xmlOutput>true</xmlOutput>
+                            <failOnError>true</failOnError>
+                            <!-- Add this configuration to your build if you need to exclude Spotbugs findings -->
+                            <!--<excludeFilterFile>${project.rootdir}/spotbugs-exclude.xml</excludeFilterFile>-->
+                        </configuration>
                     </plugin>
 
                     <!-- PMD CHECK: Fails build if there are "High" priority violations -->
@@ -365,7 +379,6 @@
                     <plugin>
                         <groupId>org.jacoco</groupId>
                         <artifactId>jacoco-maven-plugin</artifactId>
-                        <version>${jacoco-maven-plugin.version}</version>
                         <executions>
                             <!-- Prepares the property pointing to the JaCoCo runtime agent which
                                 is passed as VM argument when Maven the Surefire plugin is executed. -->
@@ -539,6 +552,36 @@
 
                 </plugins>
             </build>
+
+            <reporting>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-report-plugin</artifactId>
+                        <version>${maven.surefire-plugin.version}</version>
+                        <reportSets>
+                            <reportSet>
+                                <id>unit-tests</id>
+                                <reports>
+                                    <report>report-only</report>
+                                </reports>
+                            </reportSet>
+                            <reportSet>
+                                <id>integration-tests</id>
+                                <reports>
+                                    <report>failsafe-report-only</report>
+                                </reports>
+                            </reportSet>
+                        </reportSets>
+                        <configuration>
+                            <reportsDirectories>
+                                <trimStackTrace>false</trimStackTrace>
+                            </reportsDirectories>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </reporting>
+
         </profile>
     </profiles>
 </project>

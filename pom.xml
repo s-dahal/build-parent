@@ -13,6 +13,7 @@
         the parent version and it will adjust all of the properties being used throughout, as the properties and
         plugins will be inherited by subprojects.
     </description>
+    <packaging>pom</packaging>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -43,6 +44,9 @@
         <semver-enforcer-rule.version>0.9.33</semver-enforcer-rule.version>
     </properties>
 
+    <modules>
+        <module>java-parent</module>
+    </modules>
     <build>
         <pluginManagement>
             <plugins>
@@ -111,11 +115,13 @@
                     <version>${maven.gpg-plugin.version}</version>
                 </plugin>
 
+                <plugin>
+                    <groupId>org.commonjava.maven.plugins</groupId>
+                    <artifactId>directory-maven-plugin</artifactId>
+                    <version>${maven.directory.plugin}</version>
+                </plugin>
             </plugins>
         </pluginManagement>
-
-        <plugins>
-        </plugins>
     </build>
 
     <reporting>
@@ -186,23 +192,6 @@
                                 <configuration>
                                     <failOnWarning>true</failOnWarning>
                                     <outputXML>true</outputXML>
-                                    <!-- ignore jsr305 for both "used but undeclared" and "declared but unused" -->
-                                    <ignoredDependencies>
-                                        <ignoredDependency>com.google.code.findbugs:jsr305</ignoredDependency>
-                                    </ignoredDependencies>
-
-                                    <!-- ignore annotations for "used but undeclared" warnings -->
-                                    <ignoredUsedUndeclaredDependencies>
-                                        <ignoredUsedUndeclaredDependency>com.google.code.findbugs:annotations</ignoredUsedUndeclaredDependency>
-                                    </ignoredUsedUndeclaredDependencies>
-
-                                    <!-- ignore annotations for "unused but declared" warnings -->
-                                    <ignoredUnusedDeclaredDependencies>
-                                        <ignoredUnusedDeclaredDependency>com.google.code.findbugs:annotations</ignoredUnusedDeclaredDependency>
-                                        <ignoredUnusedDeclaredDependency>org.hibernate:hibernate-validator</ignoredUnusedDeclaredDependency>
-                                        <ignoredUnusedDeclaredDependency>org.hibernate:hibernate-validator-annotation-processor</ignoredUnusedDeclaredDependency>
-                                        <ignoredUnusedDeclaredDependency>org.apache.geronimo.specs:geronimo-jms_1.1_spec</ignoredUnusedDeclaredDependency>
-                                    </ignoredUnusedDeclaredDependencies>
                                 </configuration>
                             </execution>
                         </executions>
@@ -225,6 +214,7 @@
                                     <rules>
                                         <requireReleaseDeps>
                                             <message>No Snapshots Allowed!</message>
+                                            <failWhenParentIsSnapshot>false</failWhenParentIsSnapshot>
                                         </requireReleaseDeps>
                                         <banDistributionManagement/>
                                         <banDuplicatePomDependencyVersions/>
