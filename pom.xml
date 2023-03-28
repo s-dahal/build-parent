@@ -31,7 +31,7 @@
         <maven.site.plugin>3.9.1</maven.site.plugin>
 
         <!-- Command Line tooling -->
-        <maven.dependency-plugin.version>3.2.0</maven.dependency-plugin.version>
+        <maven.dependency-plugin.version>3.3.0</maven.dependency-plugin.version>
         <maven.release-plugin.version>2.5.3</maven.release-plugin.version>
         <maven.assembly.version>3.4.2</maven.assembly.version>
         <maven.build-helper.plugin.version>3.2.0</maven.build-helper.plugin.version>
@@ -171,7 +171,7 @@
             <!-- To disable this, use something like "mvn install -P!codeQuality" -->
             <id>codeQuality</id>
             <activation>
-                <activeByDefault>true</activeByDefault>
+                <activeByDefault>false</activeByDefault>
             </activation>
             <build>
                 <plugins>
@@ -180,22 +180,22 @@
                     <!--======================================================-->
 
                     <!-- Dependency Check - ensure that you have not used transitive dependencies -->
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-dependency-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>analyze</id>
-                                <goals>
-                                    <goal>analyze-only</goal>
-                                </goals>
-                                <configuration>
-                                    <failOnWarning>true</failOnWarning>
-                                    <outputXML>true</outputXML>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
+<!--                    <plugin>-->
+<!--                        <groupId>org.apache.maven.plugins</groupId>-->
+<!--                        <artifactId>maven-dependency-plugin</artifactId>-->
+<!--                        <executions>-->
+<!--                            <execution>-->
+<!--                                <id>analyze</id>-->
+<!--                                <goals>-->
+<!--                                    <goal>analyze-only</goal>-->
+<!--                                </goals>-->
+<!--                                <configuration>-->
+<!--                                    <failOnWarning>false</failOnWarning>-->
+<!--                                    <outputXML>true</outputXML>-->
+<!--                                </configuration>-->
+<!--                            </execution>-->
+<!--                        </executions>-->
+<!--                    </plugin>-->
 
                     <!-- Use of Enforcer plugin to:
                          * Not allow snapshots

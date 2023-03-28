@@ -25,6 +25,7 @@
         <!-- Default Lifecycle additions -->
         <maven.resources-plugin.version>3.2.0</maven.resources-plugin.version>
         <maven.surefire-plugin.version>2.22.1</maven.surefire-plugin.version>
+        <maven.surefire-report-plugin.version>2.22.2</maven.surefire-report-plugin.version>
         <maven.failsafe-plugin.version>2.22.2</maven.failsafe-plugin.version>
         <maven.compiler-plugin.version>3.8.1</maven.compiler-plugin.version>
         <maven.jar-plugin.version>3.2.0</maven.jar-plugin.version>
@@ -90,9 +91,7 @@
                         <source>${java.source.version}</source>
                         <target>${java.target.version}</target>
                         <fork>true</fork>
-                        <compilerArgs>
-                            --enable-preview
-                        </compilerArgs>
+                        <compilerArgs>--enable-preview</compilerArgs>
                     </configuration>
                 </plugin>
 
@@ -558,7 +557,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-surefire-report-plugin</artifactId>
-                        <version>${maven.surefire-plugin.version}</version>
+                        <version>${maven.surefire-report-plugin.version}</version>
                         <reportSets>
                             <reportSet>
                                 <id>unit-tests</id>
@@ -577,6 +576,7 @@
                             <reportsDirectories>
                                 <trimStackTrace>false</trimStackTrace>
                             </reportsDirectories>
+                            <argLine>--enable-preview</argLine>
                         </configuration>
                     </plugin>
                 </plugins>
