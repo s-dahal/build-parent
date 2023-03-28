@@ -24,9 +24,9 @@
 
         <!-- Default Lifecycle additions -->
         <maven.resources-plugin.version>3.2.0</maven.resources-plugin.version>
-        <maven.surefire-plugin.version>2.22.1</maven.surefire-plugin.version>
-        <maven.surefire-report-plugin.version>2.22.2</maven.surefire-report-plugin.version>
-        <maven.failsafe-plugin.version>2.22.2</maven.failsafe-plugin.version>
+        <maven.surefire-plugin.version>3.0.0</maven.surefire-plugin.version>
+        <maven.surefire-report-plugin.version>3.0.0</maven.surefire-report-plugin.version>
+        <maven.failsafe-plugin.version>3.0.0</maven.failsafe-plugin.version>
         <maven.compiler-plugin.version>3.8.1</maven.compiler-plugin.version>
         <maven.jar-plugin.version>3.2.0</maven.jar-plugin.version>
         <maven.war-plugin.version>3.3.2</maven.war-plugin.version>
@@ -92,6 +92,24 @@
                         <target>${java.target.version}</target>
                         <fork>true</fork>
                         <compilerArgs>--enable-preview</compilerArgs>
+                        <annotationProcessorPaths>
+                            <annotationProcessorPath>
+                                <groupId>io.soabase.record-builder</groupId>
+                                <artifactId>record-builder-processor</artifactId>
+                                <version>${record-builder-core.version}</version>
+                            </annotationProcessorPath>
+                            <annotationProcessorPath>
+                                <groupId>com.google.auto.service</groupId>
+                                <artifactId>auto-service</artifactId>
+                                <version>${auto-service.version}</version>
+                            </annotationProcessorPath>
+                        </annotationProcessorPaths>
+                        <annotationProcessors>
+                            <annotationProcessor>io.soabase.recordbuilder.processor.RecordBuilderProcessor
+                            </annotationProcessor>
+                            <annotationProcessor>com.google.auto.service.processor.AutoServiceProcessor
+                            </annotationProcessor>
+                        </annotationProcessors>
                     </configuration>
                 </plugin>
 
