@@ -6,7 +6,7 @@
     <parent>
         <groupId>dev.ikm.build</groupId>
         <artifactId>parent</artifactId>
-        <version>0.1.0-SNAPSHOT</version>
+        <version>0.1.0</version>
     </parent>
     <artifactId>java-parent</artifactId>
     <name>Java Parent</name>
@@ -129,6 +129,10 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-javadoc-plugin</artifactId>
                     <version>${maven-javadoc-plugin.version}</version>
+                    <configuration>
+                        <release>${java.source.version}</release>
+                        <additionalOptions>--enable-preview</additionalOptions>
+                    </configuration>
                 </plugin>
 
                 <!--======================================================-->
