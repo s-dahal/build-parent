@@ -6,7 +6,7 @@
     <parent>
         <groupId>dev.ikm.build</groupId>
         <artifactId>parent</artifactId>
-        <version>0.1.0</version>
+        <version>0.2.0</version>
     </parent>
     <artifactId>java-parent</artifactId>
     <name>Java Parent</name>
@@ -33,6 +33,9 @@
         <maven-javadoc-plugin.version>3.3.1</maven-javadoc-plugin.version>
         <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
 
+        <!-- Compiler Extensions -->
+        <record-builder-core.version>34</record-builder-core.version>
+        <auto-service.version>1.0.1</auto-service.version>
         <!-- Style and Code Quality Check Plugins -->
         <maven-checkstyle-plugin.version>3.1.2</maven-checkstyle-plugin.version>
         <maven-pmd-plugin.version>3.20.0</maven-pmd-plugin.version>
