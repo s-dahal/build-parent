@@ -120,6 +120,12 @@
                     <artifactId>directory-maven-plugin</artifactId>
                     <version>${maven.directory.plugin}</version>
                 </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <version>${maven.dependency-plugin.version}</version>
+                </plugin>
             </plugins>
         </pluginManagement>
     </build>
