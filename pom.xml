@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>dev.ikm.build</groupId>
     <artifactId>parent</artifactId>
-    <version>1.5.0</version>
+    <version>1.6.0-SNAPSHOT</version>
     <name>General Parent</name>
     <description>
         The General Parent that helps to define the build processes that should be used across projects, regardless of.
@@ -41,6 +41,7 @@
         <maven.gpg-plugin.version>3.0.1</maven.gpg-plugin.version>
         <maven.nexus-staging.plugin.version>1.6.7</maven.nexus-staging.plugin.version>
         <sonar-maven-plugin.version>3.2</sonar-maven-plugin.version>
+        <maven.enforcer-plugin.version>3.3.0</maven.enforcer-plugin.version>
         <semver-enforcer-rule.version>0.9.33</semver-enforcer-rule.version>
     </properties>
 
@@ -125,6 +126,12 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-dependency-plugin</artifactId>
                     <version>${maven.dependency-plugin.version}</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-enforcer-plugin</artifactId>
+                    <version>${maven.enforcer-plugin.version}</version>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -222,9 +229,28 @@
                                             <message>No Snapshots Allowed!</message>
                                             <failWhenParentIsSnapshot>false</failWhenParentIsSnapshot>
                                         </requireReleaseDeps>
+                                    </rules>
+                                    <fail>false</fail>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>enforce-no-bad-sections</id>
+                                <goals>
+                                    <goal>enforce</goal>
+                                </goals>
+                                <configuration>
+                                    <rules>
                                         <banDistributionManagement/>
                                         <banDuplicatePomDependencyVersions/>
-                                        <banDynamicVersions/>
+                                        <banDynamicVersions>
+                                            <allowSnapshots>true</allowSnapshots>
+                                            <allowRelease>false</allowRelease>
+                                            <allowLatest>false</allowLatest>
+                                            <allowRanges>false</allowRanges>
+                                            <excludeOptionals>false</excludeOptionals>
+                                            <excludedScopes />
+                                            <ignores />
+                                        </banDynamicVersions>
                                         <requireProperty>
                                             <property>project.version</property>
                                             <message>"Project version must be a semantic version."</message>
@@ -287,6 +313,52 @@
                 </plugins>
             </build>
 
+        </profile>
+
+        <profile>
+            <id>release</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-enforcer-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>enforce-no-snapshots</id>
+                                <goals>
+                                    <goal>enforce</goal>
+                                </goals>
+                                <configuration>
+                                    <rules>
+                                        <requireReleaseDeps>
+                                            <message>No Snapshots Allowed!</message>
+                                            <failWhenParentIsSnapshot>true</failWhenParentIsSnapshot>
+                                        </requireReleaseDeps>
+                                    </rules>
+                                    <fail>true</fail>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>enforce-no-bad-sections</id>
+                                <goals>
+                                    <goal>enforce</goal>
+                                </goals>
+                                <configuration>
+                                    <rules>
+                                        <banDynamicVersions>
+                                            <allowSnapshots>false</allowSnapshots>
+                                        </banDynamicVersions>
+                                    </rules>
+                                    <fail>true</fail>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
         </profile>
     </profiles>
 
