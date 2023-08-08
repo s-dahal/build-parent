@@ -85,7 +85,7 @@ pipeline {
                     isSnapshot = pomVersion.contains("-SNAPSHOT")
                     repositoryId = 'maven-snapshots'
 
-                    if (buildingTag()) {
+                    if (env.TAG_NAME) {
                         if (!isSnapshot) {
                             repositoryId = 'maven-releases'
                         } else {
