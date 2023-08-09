@@ -47,17 +47,8 @@
         <maven.sonarqube.version>3.9.1.2184</maven.sonarqube.version>
         <jlgrock.checkstyle.version>2.1.0</jlgrock.checkstyle.version>
         <maven.pom-check-maven-plugin.version>1.0.0</maven.pom-check-maven-plugin.version>
+        <maven.directory.plugin>0.9.3</maven.directory.plugin>
 
-        <!-- SonarQube Scanner Properties -->
-        <sonar.language>java</sonar.language>
-        <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
-        <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
-        <sonar.sources>src/main</sonar.sources>
-        <sonar.binaries>target/classes</sonar.binaries>
-        <sonar.tests>src/test/java</sonar.tests>
-        <sonar.language>java</sonar.language>
-
-        <maven.dependency-plugin.version>3.6.0</maven.dependency-plugin.version>
         <maven.mycila.version>2.2.0</maven.mycila.version>
     </properties>
 

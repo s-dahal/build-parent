@@ -40,9 +40,10 @@
         <!-- Release plugins -->
         <maven.gpg-plugin.version>3.0.1</maven.gpg-plugin.version>
         <maven.nexus-staging.plugin.version>1.6.7</maven.nexus-staging.plugin.version>
-        <sonar-maven-plugin.version>3.2</sonar-maven-plugin.version>
+        <sonar-maven-plugin.version>3.9.1.2184</sonar-maven-plugin.version>
         <maven.enforcer-plugin.version>3.3.0</maven.enforcer-plugin.version>
         <semver-enforcer-rule.version>0.9.33</semver-enforcer-rule.version>
+        <maven.directory.plugin>0.9.3</maven.directory.plugin>
     </properties>
 
     <modules>
