@@ -32,7 +32,7 @@
         <maven.jar-plugin.version>3.2.0</maven.jar-plugin.version>
         <maven.war-plugin.version>3.3.2</maven.war-plugin.version>
         <maven-javadoc-plugin.version>3.5.0</maven-javadoc-plugin.version>
-        <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
+        <maven-source-plugin.version>3.3.0</maven-source-plugin.version>
 
         <!-- Compiler Extensions -->
         <record-builder-core.version>34</record-builder-core.version>
@@ -259,8 +259,8 @@
                         <id>attach-sources</id>
                         <phase>verify</phase>
                         <goals>
-                            <goal>jar</goal>
-                            <goal>test-jar</goal>
+                            <goal>jar-no-fork</goal>
+                            <goal>test-jar-no-fork</goal>
                         </goals>
                     </execution>
                 </executions>
