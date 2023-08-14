@@ -45,7 +45,6 @@
         <maven-pmd-plugin.version>3.21.0</maven-pmd-plugin.version>
         <maven.jacoco-plugin.version>0.8.8</maven.jacoco-plugin.version>
         <maven.spotbugs-plugin.version>4.7.3.2</maven.spotbugs-plugin.version>
-        <maven.sonarqube.version>3.9.1.2184</maven.sonarqube.version>
         <jlgrock.checkstyle.version>2.1.0</jlgrock.checkstyle.version>
         <maven.pom-check-maven-plugin.version>1.0.0</maven.pom-check-maven-plugin.version>
         <maven.mycila.version>2.2.0</maven.mycila.version>
