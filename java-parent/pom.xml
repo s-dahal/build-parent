@@ -27,12 +27,13 @@
         <maven.resources-plugin.version>3.2.0</maven.resources-plugin.version>
         <maven.surefire-plugin.version>3.1.2</maven.surefire-plugin.version>
         <maven.surefire-report-plugin.version>3.1.2</maven.surefire-report-plugin.version>
-        <maven.failsafe-plugin.version>3.0.0</maven.failsafe-plugin.version>
-        <maven.compiler-plugin.version>3.8.1</maven.compiler-plugin.version>
-        <maven.jar-plugin.version>3.2.0</maven.jar-plugin.version>
-        <maven.war-plugin.version>3.3.2</maven.war-plugin.version>
+        <maven.failsafe-plugin.version>3.1.2</maven.failsafe-plugin.version>
+        <maven.compiler-plugin.version>3.10.1</maven.compiler-plugin.version>
+        <maven.jar-plugin.version>3.3.0</maven.jar-plugin.version>
+        <maven.war-plugin.version>3.4.0</maven.war-plugin.version>
         <maven-javadoc-plugin.version>3.5.0</maven-javadoc-plugin.version>
         <maven-source-plugin.version>3.3.0</maven-source-plugin.version>
+        <maven.resources-plugin.version>3.3.1</maven.resources-plugin.version>
 
         <!-- Compiler Extensions -->
         <record-builder-core.version>34</record-builder-core.version>
@@ -47,9 +48,9 @@
         <maven.sonarqube.version>3.9.1.2184</maven.sonarqube.version>
         <jlgrock.checkstyle.version>2.1.0</jlgrock.checkstyle.version>
         <maven.pom-check-maven-plugin.version>1.0.0</maven.pom-check-maven-plugin.version>
-        <maven.directory.plugin>0.9.3</maven.directory.plugin>
-
         <maven.mycila.version>2.2.0</maven.mycila.version>
+
+        <eclipse-plugin.version>1.0.0</eclipse-plugin.version>
     </properties>
 
     <build>
@@ -84,19 +85,6 @@
 
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-jar-plugin</artifactId>
-                    <version>${maven.jar-plugin.version}</version>
-                    <configuration>
-                        <archive>
-                            <manifestEntries>
-                                <Automatic-Module-Name>${project.groupId}.${project.artifactId}</Automatic-Module-Name>
-                            </manifestEntries>
-                        </archive>
-                    </configuration>
-                </plugin>
-
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-war-plugin</artifactId>
                     <version>${maven.war-plugin.version}</version>
                 </plugin>
@@ -105,11 +93,6 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-javadoc-plugin</artifactId>
                     <version>${maven-javadoc-plugin.version}</version>
-                    <configuration>
-                        <source>${java.source.version}</source>
-                        <release>${java.target.version}</release>
-                        <additionalOptions>--enable-preview</additionalOptions>
-                    </configuration>
                 </plugin>
 
                 <!--======================================================-->
@@ -166,32 +149,7 @@
                 <plugin>
                     <groupId>org.eclipse.m2e</groupId>
                     <artifactId>lifecycle-mapping</artifactId>
-                    <version>1.0.0</version>
-                    <configuration>
-                        <lifecycleMappingMetadata>
-                            <pluginExecutions>
-                                <pluginExecution>
-                                    <pluginExecutionFilter>
-                                        <groupId>
-                                            com.lazerycode.jmeter
-                                        </groupId>
-                                        <artifactId>
-                                            jmeter-maven-plugin
-                                        </artifactId>
-                                        <versionRange>
-                                            [3.4.0,)
-                                        </versionRange>
-                                        <goals>
-                                            <goal>configure</goal>
-                                        </goals>
-                                    </pluginExecutionFilter>
-                                    <action>
-                                        <ignore></ignore>
-                                    </action>
-                                </pluginExecution>
-                            </pluginExecutions>
-                        </lifecycleMappingMetadata>
-                    </configuration>
+                    <version>${eclipse-plugin.version}</version>
                 </plugin>
 
                 <!--Spot bugs -->
@@ -214,57 +172,14 @@
                 </plugin>
 
                 <plugin>
-                    <groupId>com.mycila</groupId>
-                    <artifactId>license-maven-plugin</artifactId>
-                    <version>${maven.mycila.version}</version>
-                    <configuration>
-                        <header>${basedir}/LICENSE</header>
-                    </configuration>
-                </plugin>
-
-                <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-dependency-plugin</artifactId>
-                    <version>${maven.dependency-plugin.version}</version>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>${maven.jar-plugin.version}</version>
                 </plugin>
             </plugins>
         </pluginManagement>
 
         <plugins>
-            <!-- Generate Java Doc jar -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <configuration>
-                    <doclint>none</doclint>
-                    <release>${java.target.version}</release>
-                    <additionalOptions>--enable-preview</additionalOptions>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>jar</id>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <!-- Source Files -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-source-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>attach-sources</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>jar</goal>
-                            <goal>test-jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -303,6 +218,36 @@
                 <configuration>
                     <useModulePath>false</useModulePath>
                     <argLine>--enable-preview</argLine>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.eclipse.m2e</groupId>
+                <artifactId>lifecycle-mapping</artifactId>
+                <configuration>
+                    <lifecycleMappingMetadata>
+                        <pluginExecutions>
+                            <pluginExecution>
+                                <pluginExecutionFilter>
+                                    <groupId>
+                                        com.lazerycode.jmeter
+                                    </groupId>
+                                    <artifactId>
+                                        jmeter-maven-plugin
+                                    </artifactId>
+                                    <versionRange>
+                                        [3.4.0,)
+                                    </versionRange>
+                                    <goals>
+                                        <goal>configure</goal>
+                                    </goals>
+                                </pluginExecutionFilter>
+                                <action>
+                                    <ignore></ignore>
+                                </action>
+                            </pluginExecution>
+                        </pluginExecutions>
+                    </lifecycleMappingMetadata>
                 </configuration>
             </plugin>
         </plugins>
@@ -361,7 +306,7 @@
                 <artifactId>maven-checkstyle-plugin</artifactId>
                 <configuration>
                     <configLocation>checkstyle/production-checkstyle.xml</configLocation>
-                    <encoding>UTF-8</encoding>
+                    <outputEncoding>${project.reporting.outputEncoding}</outputEncoding>
                 </configuration>
                 <reportSets>
                     <reportSet>
@@ -375,6 +320,154 @@
     </reporting>
 
     <profiles>
+        <profile>
+            <id>java-source-additional-tasks</id>
+            <activation>
+                <file>
+                    <exists>${basedir}/src/main/java</exists>
+                </file>
+            </activation>
+            <build>
+                <!-- apply licenses to all java source files -->
+                <plugins>
+                    <plugin>
+                        <groupId>com.mycila</groupId>
+                        <artifactId>license-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>apply-license-to-source</id>
+                                <goals>
+                                    <goal>format</goal>
+                                </goals>
+                                <phase>generate-sources</phase>
+                                <configuration>
+                                    <licenseSets>
+                                        <licenseSet>
+                                            <header>com/mycila/maven/plugin/license/templates/APACHE-2.txt</header>
+                                        </licenseSet>
+                                    </licenseSets>
+                                    <basedir>${basedir}/src/main/java</basedir>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <!-- Generate Java Doc jar -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <configuration>
+                            <doclint>none</doclint>
+                            <source>${java.source.version}</source>
+                            <release>${java.target.version}</release>
+                            <release>${java.target.version}</release>
+                            <additionalOptions>--enable-preview</additionalOptions>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>jar</id>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <!-- Source Files -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-source-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>attach-sources</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-jar-plugin</artifactId>
+                        <configuration>
+                            <archive>
+                                <manifestEntries>
+                                    <Automatic-Module-Name>${project.groupId}.${project.artifactId}</Automatic-Module-Name>
+                                </manifestEntries>
+                            </archive>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <id>java-tests-additional-tasks</id>
+            <activation>
+                <file>
+                    <exists>${basedir}/src/test/java</exists>
+                </file>
+            </activation>
+            <build>
+                <plugins>
+                    <!-- bundle test classes into a jar -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-jar-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>jar-tests-classes</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>test-jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <!-- Source Files -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-source-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>attach-test-sources</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>test-jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <!-- apply licenses to all java test source files -->
+                    <plugin>
+                        <groupId>com.mycila</groupId>
+                        <artifactId>license-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>apply-license-to-test-source</id>
+                                <goals>
+                                    <goal>format</goal>
+                                </goals>
+                                <phase>generate-sources</phase>
+                                <configuration>
+                                    <licenseSets>
+                                        <licenseSet>
+                                            <header>com/mycila/maven/plugin/license/templates/APACHE-2.txt</header>
+                                        </licenseSet>
+                                    </licenseSets>
+                                    <basedir>${basedir}/src/test/java</basedir>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
         <profile>
             <!-- To disable this, use something like "mvn install -P!codeQuality" -->
             <id>codeQuality</id>
@@ -425,6 +518,18 @@
                                 <checkModificationExclude>pom.xml</checkModificationExclude>
                             </checkModificationExcludes>
                         </configuration>
+                        <executions>
+                            <execution>
+                                <id>analyze</id>
+                                <goals>
+                                    <goal>analyze-only</goal>
+                                </goals>
+                                <configuration>
+                                    <failOnWarning>false</failOnWarning>
+                                    <outputXML>true</outputXML>
+                                </configuration>
+                            </execution>
+                        </executions>
                     </plugin>
 
                     <!-- SPOTBUGS CHECK: Fails build if there are issues -->
@@ -620,7 +725,7 @@
                                 <configuration>
                                     <rules>
                                         <requireJavaVersion>
-                                            <version>19</version>
+                                            <version>${java.target.version}</version>
                                         </requireJavaVersion>
                                     </rules>
                                     <fail>true</fail>
@@ -628,12 +733,6 @@
                             </execution>
                         </executions>
                     </plugin>
-
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-dependency-plugin</artifactId>
-                    </plugin>
-
                 </plugins>
             </build>
 
@@ -666,7 +765,7 @@
                     </plugin>
                 </plugins>
             </reporting>
-
         </profile>
+
     </profiles>
 </project>
