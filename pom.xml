@@ -74,7 +74,7 @@
         <!-- Google license plugin-->
         <maven-license-plugin.version>4.1</maven-license-plugin.version>
         <!-- Mojohaus license plugin-->
-        <maven-mojo-license-plugin.version>2.2</maven-mojo-license-plugin.version>
+        <maven-mojo-license-plugin.version>2.2.0</maven-mojo-license-plugin.version>
         <maven.changes-plugin.version>2.12.1</maven.changes-plugin.version>
 
         <maven.sonarqube.version>3.9.1.2184</maven.sonarqube.version>
