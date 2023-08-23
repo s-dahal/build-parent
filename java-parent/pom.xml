@@ -12,8 +12,8 @@
     <name>Java Parent</name>
     <description>
         The Java Parent that helps to define the build processes that should be used across projects. This is versioned
-        and if you want to use a different version of the pom, you can simply change the parent version and it will
-        adjust all of the properties being used throughout, as the properties and plugins will be inherited by
+        and if you want to use a different version of the pom, you can simply change the parent version, and it will
+        adjust all the properties being used throughout, as the properties and plugins will be inherited by
         subprojects.
     </description>
     <packaging>pom</packaging>
@@ -137,14 +137,6 @@
                     <version>${maven.jacoco-plugin.version}</version>
                 </plugin>
 
-                <!--This plugin's configuration is used to store Eclipse m2e settings
-                    only. It has no influence on the Maven build itself. -->
-                <plugin>
-                    <groupId>org.eclipse.m2e</groupId>
-                    <artifactId>lifecycle-mapping</artifactId>
-                    <version>${eclipse-plugin.version}</version>
-                </plugin>
-
                 <!--Spot bugs -->
                 <plugin>
                     <groupId>com.github.spotbugs</groupId>
@@ -211,36 +203,6 @@
                 <configuration>
                     <useModulePath>false</useModulePath>
                     <argLine>--enable-preview</argLine>
-                </configuration>
-            </plugin>
-
-            <plugin>
-                <groupId>org.eclipse.m2e</groupId>
-                <artifactId>lifecycle-mapping</artifactId>
-                <configuration>
-                    <lifecycleMappingMetadata>
-                        <pluginExecutions>
-                            <pluginExecution>
-                                <pluginExecutionFilter>
-                                    <groupId>
-                                        com.lazerycode.jmeter
-                                    </groupId>
-                                    <artifactId>
-                                        jmeter-maven-plugin
-                                    </artifactId>
-                                    <versionRange>
-                                        [3.4.0,)
-                                    </versionRange>
-                                    <goals>
-                                        <goal>configure</goal>
-                                    </goals>
-                                </pluginExecutionFilter>
-                                <action>
-                                    <ignore></ignore>
-                                </action>
-                            </pluginExecution>
-                        </pluginExecutions>
-                    </lifecycleMappingMetadata>
                 </configuration>
             </plugin>
         </plugins>
