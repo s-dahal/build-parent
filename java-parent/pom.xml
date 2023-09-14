@@ -28,6 +28,7 @@
         <maven.surefire-plugin.version>3.1.2</maven.surefire-plugin.version>
         <maven.surefire-report-plugin.version>3.1.2</maven.surefire-report-plugin.version>
         <maven.failsafe-plugin.version>3.1.2</maven.failsafe-plugin.version>
+        <maven.surefire-junit-platform.version>3.1.2</maven.surefire-junit-platform.version>
         <maven.compiler-plugin.version>3.10.1</maven.compiler-plugin.version>
         <maven.jar-plugin.version>3.3.0</maven.jar-plugin.version>
         <maven.war-plugin.version>3.4.0</maven.war-plugin.version>
@@ -48,9 +49,22 @@
         <jlgrock.checkstyle.version>2.1.0</jlgrock.checkstyle.version>
         <maven.pom-check-maven-plugin.version>1.0.0</maven.pom-check-maven-plugin.version>
         <maven.mycila.version>2.2.0</maven.mycila.version>
+        <junit.version>5.6.3</junit.version>
 
         <eclipse-plugin.version>1.0.0</eclipse-plugin.version>
     </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.junit</groupId>
+                <artifactId>junit-bom</artifactId>
+                <version>${junit.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <build>
         <pluginManagement>
@@ -449,6 +463,14 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-failsafe-plugin</artifactId>
+                        <dependencies>
+                            <!-- https://maven.apache.org/surefire/maven-failsafe-plugin/examples/junit-platform.html -->
+                            <dependency>
+                                <groupId>org.apache.maven.surefire</groupId>
+                                <artifactId>surefire-junit-platform</artifactId>
+                                <version>${maven.surefire-junit-platform.version}</version>
+                            </dependency>
+                        </dependencies>
                         <executions>
                             <execution>
                                 <goals>
@@ -458,7 +480,8 @@
                             </execution>
                         </executions>
                         <configuration>
-                            <useModulePath>true</useModulePath> <!-- this is the default, just being explicit -->
+                            <forkCount>1</forkCount> <!-- More than 1 fork causes issues with junit platform and error logging -->
+                            <useModulePath>true</useModulePath> <!-- default is true, just being explicit -->
                             <!-- Sets the VM argument line used when integration tests are run. -->
                             <argLine>${failsafeArgLine} --enable-preview</argLine>
                         </configuration>
