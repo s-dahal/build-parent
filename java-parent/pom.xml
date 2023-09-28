@@ -480,7 +480,8 @@
                             </execution>
                         </executions>
                         <configuration>
-                            <forkCount>1</forkCount> <!-- More than 1 fork causes issues with junit platform and error logging -->
+                            <forkCount>0.5C</forkCount>
+                            <reuseForks>false</reuseForks>
                             <useModulePath>true</useModulePath> <!-- default is true, just being explicit -->
                             <!-- Sets the VM argument line used when integration tests are run. -->
                             <argLine>${failsafeArgLine} --enable-preview</argLine>
