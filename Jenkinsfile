@@ -5,6 +5,11 @@
 pipeline {
     agent any
 
+     tools {
+        jdk "java-21"
+     }
+
+
     environment {
         SONAR_AUTH_TOKEN    = credentials('sonarqube_pac_token')
         SONARQUBE_URL       = "${GLOBAL_SONARQUBE_URL}"
@@ -34,6 +39,7 @@ pipeline {
                 script{
                     configFileProvider([configFile(fileId: 'settings.xml', variable: 'MAVEN_SETTINGS')]) {
                         sh """
+                            java --version
                             mvn clean install \
                                 -s '${MAVEN_SETTINGS}' \
                                 --batch-mode \
@@ -45,6 +51,8 @@ pipeline {
                 }
             }
         }
+
+
 
         stage('SonarQube Scan') {
             steps{
