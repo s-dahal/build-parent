@@ -238,14 +238,14 @@
                     <artifactId>gitflow-maven-plugin</artifactId>
                     <version>${maven.github-flow.version}</version>
                     <configuration>
-                        <featureNamePattern>^(?!(((feature|hotfix|bugfix))\/IKM-\d+(-[0-9A-Za-z\-]*)*)|main|prod|master|dev).*$</featureNamePattern>
+                        <featureNamePattern>^(?!(((feature|hotfix|bugfix))\/(IKM|AR|IAT|IC|IKMC|IKDT|IKMD|IIA|IKMW|IKMM|TE)-\d+(-[0-9A-Za-z\-]*)*)|main|prod|master|dev).*$</featureNamePattern>
                         <releaseVersion>FAIL-SNAPSHOT</releaseVersion>
                         <gitFlowConfig>
                             <developmentBranch>main</developmentBranch>
                             <productionBranch>main</productionBranch>
-                            <featureBranchPrefix>feature/IKM-</featureBranchPrefix>
-                            <hotfixBranchPrefix>hotfix/IKM-</hotfixBranchPrefix>
-                            <supportBranchPrefix>support/IKM-</supportBranchPrefix>
+                            <featureBranchPrefix>feature/</featureBranchPrefix>
+                            <hotfixBranchPrefix>hotfix/</hotfixBranchPrefix>
+                            <supportBranchPrefix>support/</supportBranchPrefix>
                             <releaseBranchPrefix>DO_NOT_USE</releaseBranchPrefix>
                         </gitFlowConfig>
                     </configuration>
