@@ -533,7 +533,7 @@
                             <failurePriority>1</failurePriority>
                             <failOnViolation>false</failOnViolation>
                             <aggregate>true</aggregate>
-                             <targetJdk>21</targetJdk>
+                             <targetJdk>20</targetJdk>
                         </configuration>
                         <executions>
                             <execution>
