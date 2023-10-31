@@ -6,6 +6,8 @@ pipeline {
 
     tools {
         jdk "java-21"
+        maven 'default'
+        git 'git'
     }
 
     options {
@@ -56,10 +58,6 @@ pipeline {
         }
 
         stage ('Set Release Version'){
-            tools {
-                jdk 'default'
-                maven 'default'
-            }
             steps {
                 configFileProvider([configFile(fileId: 'settings.xml', variable: 'MAVEN_SETTINGS')]) {
                     sh """
@@ -73,10 +71,6 @@ pipeline {
         }
 
         stage ('Build Release Version'){
-            tools {
-                jdk 'default'
-                maven 'default'
-            }
             steps {
                 configFileProvider([configFile(fileId: 'settings.xml', variable: 'MAVEN_SETTINGS')]) {
                     sh """
@@ -93,9 +87,6 @@ pipeline {
         }
 
         stage ('Commit & Tag'){
-            tools {
-                git 'git'
-            }
             steps {
                 withCredentials([gitUsernamePassword(credentialsId: 'gitlab-for-ikmdev-release-token', gitToolName: 'git')]) {
                     sh """
@@ -109,10 +100,6 @@ pipeline {
         }
 
         stage ('Set next dev version'){
-            tools {
-                jdk 'default'
-                maven 'default'
-            }
             steps {
                 configFileProvider([configFile(fileId: 'settings.xml', variable: 'MAVEN_SETTINGS')]) {
                     sh """
@@ -126,9 +113,6 @@ pipeline {
         }
         
         stage ('Commit & Push'){
-            tools {
-                git 'git'
-            }
             steps {
                 withCredentials([gitUsernamePassword(credentialsId: 'gitlab-for-ikmdev-release-token', gitToolName: 'git')]) {
                     sh """

@@ -18,6 +18,7 @@ pipeline {
 
     tools {
         jdk "java-21"
+        git "git"
     }
 
     environment {
@@ -152,9 +153,6 @@ pipeline {
         }
 
         stage('Push Commit to GitHub') {
-            tools {
-                git "git"
-            }
             steps {
                 script {
                     withCredentials([gitUsernamePassword(credentialsId: GITHUB_CREDS_ID, gitToolName: 'git')]) {
@@ -186,9 +184,6 @@ pipeline {
                 expression {
                     !boolGitHubTagExists //Only push tag if it is not already on GitHub
                 }
-            }
-            tools {
-                git "git"
             }
             steps {
                 script {
