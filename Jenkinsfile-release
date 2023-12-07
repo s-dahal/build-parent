@@ -88,7 +88,7 @@ pipeline {
 
         stage ('Commit & Tag'){
             steps {
-                withCredentials([gitUsernamePassword(credentialsId: 'gitlab-for-ikmdev-release-token', gitToolName: 'git')]) {
+                withCredentials([gitUsernamePassword(credentialsId: 'vault-gitlab-user-pat', gitToolName: 'git')]) {
                     sh """
                         git add .
                         git config user.name jenkins
@@ -114,7 +114,7 @@ pipeline {
         
         stage ('Commit & Push'){
             steps {
-                withCredentials([gitUsernamePassword(credentialsId: 'gitlab-for-ikmdev-release-token', gitToolName: 'git')]) {
+                withCredentials([gitUsernamePassword(credentialsId: 'vault-gitlab-user-pat', gitToolName: 'git')]) {
                     sh """
                         git add .
                         git config user.name jenkins
