@@ -1,8 +1,8 @@
 # Making Changes
 
-If you would like to create a new feature or a bugfix, there are a couple of conventions that should be followed for 
-the team to be able to act on your request.  This includes understanding our current branching pattern. Also, we will 
-cover how to recover from a build failure, indicating there was a problem with your code. 
+If you would like to create a new feature or a bugfix, there are a couple of conventions that should be followed for
+the team to be able to act on your request. This includes understanding our current branching pattern. Also, we will
+cover how to recover from a build failure, indicating there was a problem with your code.
 
 ## Feature Branching and Version Tags
 
@@ -46,32 +46,32 @@ The system expects short running branches and you must merge back to the main br
 deployment option. Also, metrics will eventually be gathered on branches to report on any long-running branches. All
 repositories created by the DevSecOps tooling meet and follow the following rules on branches:
 
-| Branch Name               | Description                                                                             |
-|---------------------------|-----------------------------------------------------------------------------------------|
-| main                      | The primary branch that defines the current state of your code. This is protected in    |
-|                           | that only merge requests can happen on this branch. This should be at production        |
-|                           | quality at all times.                                                                   |
-| master                    | A protected branch that is blocked to guarantee that no one uses main as a primary      |
-|                           | branch (for consistency).                                                               |
-| production                | A protected branch that is blocked to guarantee that no one uses main as a long-running |
-|                           | branch, and that all releases happen from the "main" branch.                            |
-| prod                      | Similar to "production", making sure that folks do not create long-running branches. No |
-|                           | one should use.                                                                         |
-| feature/*                 | Used when extending the functionality of the services contained in the repository. This |
-|                           | is utilized in standard Feature Branching Workflows within a project. The name (after   |
-|                           | "feature/") must start with one or more JIRA issue numbers (e.g.                        |
-|                           | `feature/JIRA-123-example-feature`). Feature branches should be                         |
-|                           | a representation of a well defined task/story directly associated with the branch. A    |
-|                           | feature branch should be very focused and something that can be accomplished within a   |
-|                           | one or two day period. This process helps maintain that the working branch and the main |
-|                           | production branch stay in a similar parity with each other. Feature branches are meant  |
-|                           | to be short-lived and should be flagged if they are not destroyed within 2-3 days.      |
-| bugfix/*                  | Used when fixing defects releases. The name (after "bugfix/") must start with one or    |
-|                           | more JIRA issue numbers (e.g. `bugfix/JIRA-123-bugfix-problem`). Like a feature,        |
-|                           | they are limited in scope and should be tied to a specific defect story in JIRA         |
-| hotfix/*                  | Used when patching releases. The name (after "hotfix/") must start with one or          |
-|                           | more JIRA issue numbers (e.g. `hotfix/JIRA-123-emergency-fix`). Releases are expected   |
-|                           | be tagged in this branch.                                                               |
+| Branch Name | Description                                                                             |
+|-------------|-----------------------------------------------------------------------------------------|
+| main        | The primary branch that defines the current state of your code. This is protected in    |
+|             | that only merge requests can happen on this branch. This should be at production        |
+|             | quality at all times.                                                                   |
+| master      | A protected branch that is blocked to guarantee that no one uses main as a primary      |
+|             | branch (for consistency).                                                               |
+| production  | A protected branch that is blocked to guarantee that no one uses main as a long-running |
+|             | branch, and that all releases happen from the "main" branch.                            |
+| prod        | Similar to "production", making sure that folks do not create long-running branches. No |
+|             | one should use.                                                                         |
+| feature/*   | Used when extending the functionality of the services contained in the repository. This |
+|             | is utilized in standard Feature Branching Workflows within a project. The name (after   |
+|             | "feature/") must start with one or more JIRA issue numbers (e.g.                        |
+|             | `feature/JIRA-123-example-feature`). Feature branches should be                         |
+|             | a representation of a well defined task/story directly associated with the branch. A    |
+|             | feature branch should be very focused and something that can be accomplished within a   |
+|             | one or two day period. This process helps maintain that the working branch and the main |
+|             | production branch stay in a similar parity with each other. Feature branches are meant  |
+|             | to be short-lived and should be flagged if they are not destroyed within 2-3 days.      |
+| bugfix/*    | Used when fixing defects releases. The name (after "bugfix/") must start with one or    |
+|             | more JIRA issue numbers (e.g. `bugfix/JIRA-123-bugfix-problem`). Like a feature,        |
+|             | they are limited in scope and should be tied to a specific defect story in JIRA         |
+| hotfix/*    | Used when patching releases. The name (after "hotfix/") must start with one or          |
+|             | more JIRA issue numbers (e.g. `hotfix/JIRA-123-emergency-fix`). Releases are expected   |
+|             | be tagged in this branch.                                                               |
 
 ## Common Git Commands
 
@@ -119,17 +119,21 @@ git branch -d feature/MYAPP-52-some-short-description
 ```
 
 ## Creating or Updating a fork
-It is suggested to create a fork of the repository you are working on.  This allows you to create a pull request.
+
+It is suggested to create a fork of the repository you are working on. This allows you to create a pull request.
 
 ## Creating a Branch using Maven
-If you are starting a new feature, the commands to use is `mvn gitflow:feature-start`. This starts a feature branch 
-and updates the version(s). Similarly, if you are starting a new hotfix, the commands to use is `mvn gitflow:hotfix-start`.  This starts a hotfix branch and 
+
+If you are starting a new feature, the commands to use is `mvn gitflow:feature-start`. This starts a feature branch
+and updates the version(s). Similarly, if you are starting a new hotfix, the commands to use
+is `mvn gitflow:hotfix-start`. This starts a hotfix branch and
 updates version(s) to hotfix version.
 
-There is currently no way to create a bugfix branch using the Maven plugin.  You can create a bugfix branch using
+There is currently no way to create a bugfix branch using the Maven plugin. You can create a bugfix branch using
 the git commands in the following section.
 
 ## Creating a Branch using Git
+
 Sometimes you don't want to or cannot use the maven plugin, so git can be used directly to create a branch.
 This works by running the following commands to create your branch:
 
@@ -138,33 +142,34 @@ git pull origin main
 git checkout -b feature/MYAPP-52-some-short-description
 mvn version:set -DnewVersion=MYAPP-52-some-short-description
 ```
+
 ## Completing a Feature using Maven
+
 This would look something like this, allowing for concurrent feature development, bugfixes, and hotfixes:
 
 If you are starting a new feature, the commands to use is `mvn gitflow:feature-finish`. This starts a feature branch
-and updates the version(s). Similarly, if you are starting a new hotfix, the commands to use is `mvn gitflow:hotfix-start`.  This starts a hotfix branch and
+and updates the version(s). Similarly, if you are starting a new hotfix, the commands to use
+is `mvn gitflow:hotfix-start`. This starts a hotfix branch and
 updates version(s) to hotfix version.
 
-There is currently no way to complete a bugfix branch using the Maven plugin.  You can create a bugfix branch using
+There is currently no way to complete a bugfix branch using the Maven plugin. You can create a bugfix branch using
 the git commands in the following section.
 
 # Sharing Your Code
 
-Ideally at this point, you have created an isolated change, which are best for code reviews, cherry-picking and 
-rollbacks.  Now you can create a pull request.  
-
-First, make sure your branch is on the remote repository (your fork or the main repository).  You can do this by
-running the following command:
+Ideally at this point, you have created an isolated change, which are best for code reviews, cherry-picking and
+rollbacks. Now you can push your changes.
 
 ```bash
-git push origin feature/MYAPP-52-some-short-description
+git push origin HEAD:feature/MYAPP-52-some-short-description
 ```
 
-Next, go to the repository on GitHub and click on the "Pull requests" tab.  Then click on the "New pull request" 
-button.  Select the branch you want to merge from and the branch you want to merge to.  Then click on the 
-"Create pull request" button.  This will create a pull request and run the build.  If the build fails, 
-you will need to fix the build and push the changes to the branch.  If the build succeeds, you can click on the 
+Next, we will create a pull request. Go to the repository on GitHub and click on the "Pull requests" tab. Then click
+on the "New pull request" button. Select the branch you want to merge from and the branch you want to merge to. Then
+click on the "Create pull request" button. This will create a pull request and run the build. If the build fails,
+you will need to fix the build and push the changes to the branch. If the build succeeds, you can click on the
 "Merge pull request" button.
 
 [1]: <https://trunkbaseddevelopment.com> "Trunk Based Development"
+
 [2]: <https://githubflow.github.io> "GitHub Flow"
