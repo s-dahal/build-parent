@@ -121,6 +121,10 @@ git branch -d feature/MYAPP-52-some-short-description
 ## Creating or Updating a fork
 
 It is suggested to create a fork of the repository you are working on. This allows you to create a pull request.
+To create a fork, go to the repository in the web UI and click on the "Fork" button. Then select your account. This will
+create a fork of the repository in your account. You can then clone the fork to your local machine. To do this, go to
+your fork in the web UI and click on the "Code" button. Then click on the "SSH" button. Copy the URL and run the 
+appropriate `git clone` command.
 
 ## Creating a Branch using Maven
 
@@ -129,8 +133,14 @@ and updates the version(s). Similarly, if you are starting a new hotfix, the com
 is `mvn gitflow:hotfix-start`. This starts a hotfix branch and
 updates version(s) to hotfix version.
 
-There is currently no way to create a bugfix branch using the Maven plugin. You can create a bugfix branch using
-the git commands in the following section.
+Maven will prompt you to create a name for this feature/hotfix/etc.  This should follow the convention
+of starting with a JIRA project code (IKM, AR, IAT, IC, IKMC, IKDT, IKMD, IIA, IKMW, IKMM, or TE), followed
+by a dash, followed by the issue number it applies to, followed by a short description (without spaces).  
+For example `IA-30-branch-documentation`.  If you do not have one, that is ok to move on without one, but this will 
+be applied at a later point by a team developer as they are reviewing and merging it in.
+
+Also, please note that there is currently no way to create a bugfix branch using the Maven plugin. You can create a 
+bugfix branch using the git commands in the following section.
 
 ## Creating a Branch using Git
 
@@ -142,6 +152,10 @@ git pull origin main
 git checkout -b feature/MYAPP-52-some-short-description
 mvn version:set -DnewVersion=MYAPP-52-some-short-description
 ```
+This should follow the convention of starting with a JIRA project code (IKM, AR, IAT, IC, IKMC, IKDT, IKMD, IIA, IKMW, 
+IKMM, or TE), followed by a dash, followed by the issue number it applies to, followed by a short description (without 
+spaces). For example `IA-30-branch-documentation`.  If you do not have one, that is ok to move on without one, but 
+this will be applied at a later point by a team developer as they are reviewing and merging it in.
 
 ## Completing a Feature using Maven
 
