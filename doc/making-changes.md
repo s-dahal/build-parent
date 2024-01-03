@@ -118,13 +118,12 @@ git push myname feature/MYAPP-52-some-short-description
 git branch -d feature/MYAPP-52-some-short-description
 ```
 
+## Creating or Updating a fork
+It is suggested to create a fork of the repository you are working on.  This allows you to create a pull request.
+
 ## Creating a Branch using Maven
-This would look something like this, allowing for concurrent feature development, bugfixes, and hotfixes:
-
 If you are starting a new feature, the commands to use is `mvn gitflow:feature-start`. This starts a feature branch 
-and updates the version(s).
-
-If you are starting a new hotfix, the commands to use is `mvn gitflow:hotfix-start`.  This starts a hotfix branch and 
+and updates the version(s). Similarly, if you are starting a new hotfix, the commands to use is `mvn gitflow:hotfix-start`.  This starts a hotfix branch and 
 updates version(s) to hotfix version.
 
 There is currently no way to create a bugfix branch using the Maven plugin.  You can create a bugfix branch using
@@ -139,8 +138,17 @@ git pull origin main
 git checkout -b feature/MYAPP-52-some-short-description
 mvn version:set -DnewVersion=MYAPP-52-some-short-description
 ```
+## Completing a Feature using Maven
+This would look something like this, allowing for concurrent feature development, bugfixes, and hotfixes:
 
-# Create a pull request
+If you are starting a new feature, the commands to use is `mvn gitflow:feature-finish`. This starts a feature branch
+and updates the version(s). Similarly, if you are starting a new hotfix, the commands to use is `mvn gitflow:hotfix-start`.  This starts a hotfix branch and
+updates version(s) to hotfix version.
+
+There is currently no way to complete a bugfix branch using the Maven plugin.  You can create a bugfix branch using
+the git commands in the following section.
+
+# Sharing Your Code
 
 Ideally at this point, you have created an isolated change, which are best for code reviews, cherry-picking and 
 rollbacks.  Now you can create a pull request.  
@@ -149,17 +157,14 @@ First, make sure your branch is on the remote repository (your fork or the main 
 running the following command:
 
 ```bash
-# Undo the version change, if necessary
-mvn version:set -DnewVersion=
-
-# Push the branch to the feature branch to the remote repository in the origin remote 
 git push origin feature/MYAPP-52-some-short-description
 ```
 
 Next, go to the repository on GitHub and click on the "Pull requests" tab.  Then click on the "New pull request" 
-button.  Select the branch you want to merge from and the branch you want to merge to.  Then click on the "Create pull request" button.  This will
-create a pull request and run the build.  If the build fails, you will need to fix the build and push
-the changes to the branch.  If the build succeeds, you can click on the "Merge pull request" button.
+button.  Select the branch you want to merge from and the branch you want to merge to.  Then click on the 
+"Create pull request" button.  This will create a pull request and run the build.  If the build fails, 
+you will need to fix the build and push the changes to the branch.  If the build succeeds, you can click on the 
+"Merge pull request" button.
 
 [1]: <https://trunkbaseddevelopment.com> "Trunk Based Development"
 [2]: <https://githubflow.github.io> "GitHub Flow"
