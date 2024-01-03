@@ -8,5 +8,6 @@ The output of this project is solely a pom file and is distributed via standard 
 
 ## Making changes
 
-For a quick guide on how to make changes to this project, please click [here](doc/making-changes.md).
+For a quick guide on how to make changes to this project, including new features or bug fixes, 
+please click [here](doc/making-changes.md).
 

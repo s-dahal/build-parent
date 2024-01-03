@@ -158,7 +158,9 @@ the git commands in the following section.
 # Sharing Your Code
 
 Ideally at this point, you have created an isolated change, which are best for code reviews, cherry-picking and
-rollbacks. Now you can push your changes.
+rollbacks. Now you can push your changes.  It is suggested that you do not push to your `main` branch, 
+especially if you are working on multiple features.  Instead, you should push to a feature branch.  This can be done
+with the following command:
 
 ```bash
 git push origin HEAD:feature/MYAPP-52-some-short-description
