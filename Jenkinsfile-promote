@@ -1,3 +1,4 @@
+#!groovy
 @Library("titan-library") _
 
 def getTagList(String repoUrl) {
@@ -36,6 +37,7 @@ pipeline {
         GITHUB_RELEASE_API  = "https://api.github.com/repos/${GITHUB_OWNER}/${REPO_NAME}/releases"
         GITHUB_UPLOAD_API   = "https://uploads.github.com/repos/${GITHUB_OWNER}/${REPO_NAME}/releases"
         GITHUB_CREDS_ID     = 'github-promote-pat'
+        GPG_PASSPHRASE      = credentials('gpg_passphrase')
     }
 
     options {
@@ -274,5 +276,51 @@ pipeline {
                 }
             }
         }
+
+        stage('Promote Release Assets from Nexus to OSSRH') {
+            steps {
+                script {
+
+                    //Get release data from GitLab REST API
+                    withCredentials([usernamePassword(credentialsId: GITLAB_CREDS_ID, passwordVariable: 'pw', usernameVariable: 'user')]) {
+                        echo "Username: ${user}"
+                        GITLAB_RELEASE_RESPONSE = sh(
+                                script: """
+                                curl -L \
+                                    -X GET \
+                                    """ + ' -H "PRIVATE-TOKEN: $pw" ' + """ \
+                                    ${GITLAB_RELEASE_API}/${promoteTag} \
+                            """,
+                                returnStdout: true
+                        ).trim()
+                        echo 'Request finished'
+                    }
+
+                    GITLAB_RELEASE_JSON = readJSON text: GITLAB_RELEASE_RESPONSE
+
+                    echo "GITLAB_RELEASE_JSON: ${GITLAB_RELEASE_JSON}"
+                    repositoryId = 'maven-releases'
+
+                    configFileProvider([configFile(fileId: 'settings.xml', variable: 'MAVEN_SETTINGS')]) {
+
+                        sh """
+                            mvn deploy \
+                                --batch-mode \
+                                -e -X \
+                                -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn \
+                                -DskipTests \
+                                -DskipITs \
+                                -Dmaven.main.skip \
+                                -Dmaven.test.skip \
+                                -s '${MAVEN_SETTINGS}' \
+                                -DrepositoryId='${repositoryId}' \
+                                -PstageOSSRH -Dgpg.passphrase='${GPG_PASSPHRASE}'
+                        """
+                    }
+
+                }
+            }
+        }
+
     }
 }
