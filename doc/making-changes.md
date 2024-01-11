@@ -180,12 +180,10 @@ with the following command:
 git push origin HEAD:feature/MYAPP-52-some-short-description
 ```
 
-Next, we will create a pull request. Go to the repository on GitHub and click on the "Pull requests" tab. Then click
-on the "New pull request" button. Select the branch you want to merge from and the branch you want to merge to. Then
-click on the "Create pull request" button. This will create a pull request and run the build. If the build fails,
-you will need to fix the build and push the changes to the branch. If the build succeeds, you can click on the
-"Merge pull request" button.
+Next, [create a pull request][3] based off of the branch you were just working on.
 
 [1]: <https://trunkbaseddevelopment.com> "Trunk Based Development"
 
 [2]: <https://githubflow.github.io> "GitHub Flow"
+
+[3]: <https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request> "Creating a Pull Request"
