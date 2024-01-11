@@ -186,4 +186,4 @@ Next, [create a pull request][3] based off of the branch you were just working o
 
 [2]: <https://githubflow.github.io> "GitHub Flow"
 
-[3]: <https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request> "Creating a Pull Request"
+[3]: <https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request-from-a-fork> "Creating a Pull Request"
