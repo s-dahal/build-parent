@@ -30,6 +30,14 @@
         <url>http://www.github.com/ikmdev/build-parent</url>
     </scm>
 
+    <developers>
+        <developer>
+            <id>ikmdev</id>
+            <name>IKM Development Team</name>
+            <email>support@ikm.dev</email>
+        </developer>
+    </developers>
+
     <issueManagement>
         <system>GitHub</system>
         <url>https://github.com/ikmdev/build-parent/issues</url>
@@ -79,6 +87,10 @@
 
         <maven.sonarqube.version>3.9.1.2184</maven.sonarqube.version>
         <maven.github-flow.version>1.20.0</maven.github-flow.version>
+
+        <nexus-staging-maven-plugin.version>1.6.13</nexus-staging-maven-plugin.version>
+        <build-helper-maven-plugin.version>3.4.0</build-helper-maven-plugin.version>
+
     </properties>
 
     <modules>
@@ -250,6 +262,21 @@
                         </gitFlowConfig>
                     </configuration>
                 </plugin>
+
+                <!-- This plugin stage the artifacts to the OSSRH Repository, release and sync them with Central Repository -->
+                <plugin>
+                    <groupId>org.sonatype.plugins</groupId>
+                    <artifactId>nexus-staging-maven-plugin</artifactId>
+                    <version>${nexus-staging-maven-plugin.version}</version>
+                </plugin>
+
+                <!-- This plugin contains various small independent goals to assist with the Maven build lifecycle -->
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>build-helper-maven-plugin</artifactId>
+                    <version>${build-helper-maven-plugin.version}</version>
+                </plugin>
+
             </plugins>
         </pluginManagement>
 
@@ -580,6 +607,7 @@
                 </plugins>
             </build>
         </profile>
+
 
         <profile>
             <id>stageOSSRH</id>
