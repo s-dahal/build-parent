@@ -120,7 +120,7 @@ pipeline {
                                 -Dmaven.test.skip \
                                 -s '${MAVEN_SETTINGS}' \
                                 -DrepositoryId='${repositoryId}' \
-                                -PsignArtifacts -Dgpg.passphrase='${GPG_PASSPHRASE}'
+                                -PstageOSSRH -Dgpg.passphrase='${GPG_PASSPHRASE}'
                         """
                     }
                 }
