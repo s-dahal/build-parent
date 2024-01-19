@@ -612,16 +612,16 @@
         <profile>
             <id>stageOSSRH</id>
 
-<!--            <activation>-->
-<!--                <property>-->
-<!--                    <name>repositoryId</name>-->
-<!--                    <value>maven-releases</value>-->
-<!--                </property>-->
-<!--            </activation>-->
+            <activation>
+                <property>
+                    <name>repositoryIdOSSRH</name>
+                    <value>ossrh</value>
+                </property>
+            </activation>
 
             <distributionManagement>
                 <repository>
-                    <id>maven-releases</id>
+                    <id>ossrh</id>
                     <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
                 </repository>
             </distributionManagement>
