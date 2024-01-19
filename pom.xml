@@ -612,6 +612,13 @@
         <profile>
             <id>stageOSSRH</id>
 
+            <activation>
+                <property>
+                    <name>repositoryId</name>
+                    <value>maven-releases</value>
+                </property>
+            </activation>
+
             <distributionManagement>
                 <repository>
                     <id>maven-releases</id>
@@ -621,14 +628,6 @@
 
             <build>
                 <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-deploy-plugin</artifactId>
-                        <configuration>
-                            <skip>true</skip>
-                        </configuration>
-                    </plugin>
-
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-gpg-plugin</artifactId>
@@ -648,17 +647,6 @@
                                 <argument>--yes</argument>
                                 <argument>--verbose</argument>
                             </gpgArguments>
-                        </configuration>
-                    </plugin>
-
-                    <plugin>
-                        <groupId>org.sonatype.plugins</groupId>
-                        <artifactId>nexus-staging-maven-plugin</artifactId>
-                        <extensions>true</extensions>
-                        <configuration>
-                            <serverId>ossrh</serverId>
-                            <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
-                            <autoReleaseAfterClose>false</autoReleaseAfterClose>
                         </configuration>
                     </plugin>
 
