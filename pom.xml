@@ -612,12 +612,12 @@
         <profile>
             <id>stageOSSRH</id>
 
-            <activation>
-                <property>
-                    <name>repositoryId</name>
-                    <value>maven-releases</value>
-                </property>
-            </activation>
+<!--            <activation>-->
+<!--                <property>-->
+<!--                    <name>repositoryId</name>-->
+<!--                    <value>maven-releases</value>-->
+<!--                </property>-->
+<!--            </activation>-->
 
             <distributionManagement>
                 <repository>
@@ -648,6 +648,28 @@
                                 <argument>--verbose</argument>
                             </gpgArguments>
                         </configuration>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>build-helper-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>attach-artifacts</id>
+                                <phase>deploy</phase>
+                                <goals>
+                                    <goal>attach-artifact</goal>
+                                </goals>
+                                <configuration>
+                                    <artifacts>
+                                        <artifact>
+                                            <file>${project.build.directory}/*.asc</file>
+                                            <type>asc</type>
+                                        </artifact>
+                                    </artifacts>
+                                </configuration>
+                            </execution>
+                        </executions>
                     </plugin>
 
                 </plugins>
