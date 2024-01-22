@@ -121,7 +121,31 @@ pipeline {
                                 -s '${MAVEN_SETTINGS}' \
                                 -DrepositoryId='${repositoryId}' \
                                 -Dgpg.passphrase='${GPG_PASSPHRASE}'
+                        """
+                    }
+                }
+            }
+        }
 
+        stage("Publish to OSSRH maven central") {
+            steps {
+                script {
+                    pomModel = readMavenPom(file: 'pom.xml')
+                    pomVersion = pomModel.getVersion()
+                    isSnapshot = pomVersion.contains("-SNAPSHOT")
+                    repositoryId = 'maven-snapshots'
+
+                    if (env.TAG_NAME) {
+                        if (!isSnapshot) {
+                            repositoryId = 'maven-releases'
+                        } else {
+                            echo "ERROR: Only tag release versions. Tagged version was '${pomVersion}'"
+                            fail()
+                        }
+                    }
+
+                    configFileProvider([configFile(fileId: 'settings.xml', variable: 'MAVEN_SETTINGS')]) {
+                        sh """
                             mvn deploy \
                                 --batch-mode \
                                 -e \
@@ -132,8 +156,8 @@ pipeline {
                                 -Dmaven.test.skip \
                                 -s '${MAVEN_SETTINGS}' \
                                 -DrepositoryId='${repositoryId}' \
+                                -DrepositoryIdOSSRH='true' \
                                 -PstageOSSRH -Dgpg.passphrase='${GPG_PASSPHRASE}'
-
                         """
                     }
                 }
