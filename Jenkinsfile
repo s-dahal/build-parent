@@ -122,16 +122,16 @@ pipeline {
                                 -DrepositoryId='${repositoryId}' \
                                 -Dgpg.passphrase='${GPG_PASSPHRASE}'
 
-                            mvn deploy \\
-                                --batch-mode \\
-                                -e \\
-                                -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn \\
-                                -DskipTests \\
-                                -DskipITs \\
-                                -Dmaven.main.skip \\
-                                -Dmaven.test.skip \\
-                                -s '${MAVEN_SETTINGS}' \\
-                                -DrepositoryId='${repositoryId}' \\
+                            mvn deploy \
+                                --batch-mode \
+                                -e \
+                                -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn \
+                                -DskipTests \
+                                -DskipITs \
+                                -Dmaven.main.skip \
+                                -Dmaven.test.skip \
+                                -s '${MAVEN_SETTINGS}' \
+                                -DrepositoryId='${repositoryId}' \
                                 -PstageOSSRH -Dgpg.passphrase='${GPG_PASSPHRASE}'
 
                         """
