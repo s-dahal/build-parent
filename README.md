@@ -6,8 +6,7 @@ code quality, code style, and plugin configurations of Tinkar and related HL7 pr
 
 The output of this project is solely a pom file and is distributed via standard Maven release procedures.
 
-## Making changes
+## How to Contribute
 
-For a quick guide on how to make changes to this project, including new features or bug fixes, 
-please click [here](doc/making-changes.md).
+For a quick guide on how to make changes to this project, including new features or bug fixes, please click [here](doc/how-to-contribute.md).
 
