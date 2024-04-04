@@ -11,7 +11,7 @@ def getBranchName(currentBranch, customBranch) {
     def branchName = (currentBranch== 'main') ? "feature/${customBranch}" : currentBranch
     return branchName.toString();
 }
-m
+
 pipeline {
 
     agent any
