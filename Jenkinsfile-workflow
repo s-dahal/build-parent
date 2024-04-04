@@ -48,10 +48,10 @@ pipeline {
         )
     }
 
-    options([parameters {
+    parameters {
         choice(name: 'action', choices: ['Select An Action', 'start', 'finish'], description: 'Build Action. Start = starts/resumes feature , Finish = ends feature. Finish - feature branch must already exist.')
         string(name: 'feature_branch', defaultValue: '', description: 'Name of branch without feature/ prefix. Must follow ABC-123_description format. ABC = JIRA prefix.')
-    }])
+    }
 
     stages {
 
