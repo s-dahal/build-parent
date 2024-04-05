@@ -26,7 +26,7 @@ pipeline {
         TRUNK_BRANCH_NAME   = 'main'
         REPO_NAME           = "${GIT_URL.split('/')[4].split('\\.')[0]}"
         BRANCH_NAME         = "${GIT_BRANCH.startsWith('origin/') ? GIT_BRANCH['origin/'.length()..-1] : GIT_BRANCH}"
-        CUSTOM_BRANCH_NAME  = ""
+        CUSTOM_BRANCH_NAME  = " "
         MERGE_REQUEST_EXIST = false
         MERGE_REQUEST_ID    = ""
         MERGE_REQUEST_IID   = ""
@@ -46,6 +46,8 @@ pipeline {
                 daysToKeepStr: '16',
                 numToKeepStr: '10'
         )
+
+        disableConcurrentBuilds()
     }
 
     parameters {
@@ -69,7 +71,23 @@ pipeline {
                     pomVersion = pomModel.getVersion()
                     isSnapshot = pomVersion.contains("-SNAPSHOT")
                     releaseVersion = pomVersion.split("-")[0]
-                    feature_name = feature_branch.replaceAll("/s", "_")
+                    //feature_name = feature_branch.replaceAll("/s", "_")
+                }
+            }
+        }
+
+        stage ("Setup Parameters") {
+            when {
+                expression { return BRANCH_NAME.startsWith("feature/") }
+                expression { return  params.action == ''}
+            }
+
+            steps{
+                script {
+                    parameters([
+                            choice(name: 'action', choices: ['Select An Action', 'start', 'finish'], description: 'Build Action. Start = starts/resumes feature , Finish = ends feature. Finish - feature branch must already exist.'),
+                            string(name: 'feature_branch', defaultValue: '', description: 'Name of branch without feature/ prefix. Must follow ABC-123_description format. ABC = JIRA prefix.')
+                    ])
                 }
             }
         }
@@ -81,7 +99,11 @@ pipeline {
 
             steps {
                 echo "Getting Branch Name"
-                script { CUSTOM_BRANCH_NAME = getBranchName(BRANCH_NAME, feature_name) }
+
+                script {
+                    def feature_name = feature_branch.replaceAll("/s", "_")
+                    CUSTOM_BRANCH_NAME = getBranchName(BRANCH_NAME, feature_name)
+                }
                 echo "Done getting branch name: ${CUSTOM_BRANCH_NAME}"
             }
         }
@@ -140,10 +162,10 @@ pipeline {
                     sh """
                     git checkout main
                     git pull -p
-                    git checkout -b feature/${feature_name}
-                    mvn versions:set -DnewVersion=${releaseVersion}-${feature_name}-SNAPSHOT -DgenerateBackupPoms=false
-                    git commit -am "Draft: Update feature version to ${releaseVersion}-${feature_name}-SNAPSHOT"
-                    git push -u origin feature/${feature_name}
+                    git checkout -b ${CUSTOM_BRANCH_NAME}
+                    mvn versions:set -DnewVersion=${releaseVersion}-${params.feature_branch}-SNAPSHOT -DgenerateBackupPoms=false
+                    git commit -am "Draft: Update feature version to ${releaseVersion}-${params.feature_branch}-SNAPSHOT"
+                    git push -u origin ${CUSTOM_BRANCH_NAME}
                     """
                 }
             }
