@@ -35,7 +35,7 @@ pipeline {
     stages {
         stage('Maven Build') {
             when {
-                BRANCH_NAME "main"
+                expression { return BRANCH_NAME == "main"}
             }
             steps {
                 updateGitlabCommitStatus name: 'build', state: 'running'
@@ -67,7 +67,7 @@ pipeline {
                                 --batch-mode \
                                 -e \
                                 -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn \
-                                -Denforcer.skip=true
+                                -Denforcer.skip=true \
                                 -PcodeQuality
                         """
                     }
