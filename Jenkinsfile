@@ -56,6 +56,9 @@ pipeline {
         }
 
         stage('Maven Build -- Feature Branch') {
+            when {
+                expression { return BRANCH_NAME != "main"}
+            }
             steps {
                 updateGitlabCommitStatus name: 'build', state: 'running'
                 script{
