@@ -34,6 +34,9 @@ pipeline {
 
     stages {
         stage('Maven Build') {
+            when {
+                BRANCH_NAME "main"
+            }
             steps {
                 updateGitlabCommitStatus name: 'build', state: 'running'
                 script{
@@ -52,41 +55,22 @@ pipeline {
             }
         }
 
-
-
-        stage('SonarQube Scan') {
-            steps{
-                configFileProvider([configFile(fileId: 'settings.xml', variable: 'MAVEN_SETTINGS')]) {
-                    withSonarQubeEnv(installationName: 'EKS SonarQube', envOnly: true) {
-                        // This expands the environment variables SONAR_CONFIG_NAME, SONAR_HOST_URL, SONAR_AUTH_TOKEN that can be used by any script.
-                        sh """
-                            mvn sonar:sonar \
-                                -Dsonar.qualitygate.wait=true \
-                                -Dsonar.token=${SONAR_AUTH_TOKEN} \
-                                -s '${MAVEN_SETTINGS}' \
-                                --batch-mode
-                        """
-                    }
-                }
+        stage('Maven Build -- Feature Branch') {
+            steps {
+                updateGitlabCommitStatus name: 'build', state: 'running'
                 script{
                     configFileProvider([configFile(fileId: 'settings.xml', variable: 'MAVEN_SETTINGS')]) {
-
-                        def pmd = scanForIssues tool: [$class: 'Pmd'], pattern: '**/target/pmd.xml'
-                        publishIssues issues: [pmd]
-
-                        def spotbugs = scanForIssues tool: [$class: 'SpotBugs'], pattern: '**/target/spotbugsXml.xml'
-                        publishIssues issues:[spotbugs]
-
-                        publishIssues id: 'analysis', name: 'All Issues',
-                            issues: [pmd, spotbugs],
-                            filters: [includePackage('io.jenkins.plugins.analysis.*')]
+                        sh """
+                            java --version
+                            mvn clean install \
+                                -s '${MAVEN_SETTINGS}' \
+                                --batch-mode \
+                                -e \
+                                -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn \
+                                -Denforcer.skip=true
+                                -PcodeQuality
+                        """
                     }
-                }
-            }
-
-            post {
-                always {
-                    echo "post always SonarQube Scan"
                 }
             }
         }
