@@ -285,12 +285,6 @@
                     <version>${maven-javadoc-plugin.version}</version>
                 </plugin>
 
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-source-plugin</artifactId>
-                    <version>${maven-source-plugin.version}</version>
-                </plugin>
-
             </plugins>
         </pluginManagement>
 
