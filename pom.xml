@@ -643,31 +643,34 @@
                     <!-- Generate empty Java Doc jar and source jar -->
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-source-plugin</artifactId>
+                        <artifactId>maven-jar-plugin</artifactId>
                         <executions>
                             <execution>
-                                <id>sources-jar</id>
+                                <id>default-jar</id>
                                 <phase>package</phase>
                                 <goals>
                                     <goal>jar</goal>
                                 </goals>
                             </execution>
-                        </executions>
-                    </plugin>
-
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-javadoc-plugin</artifactId>
-                        <configuration>
-                            <sourcepath>${project.build.directory}/empty</sourcepath>
-                        </configuration>
-                        <executions>
                             <execution>
                                 <id>javadoc-jar</id>
                                 <phase>package</phase>
                                 <goals>
                                     <goal>jar</goal>
                                 </goals>
+                                <configuration>
+                                    <classifier>javadoc</classifier>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>sources-jar</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                                <configuration>
+                                    <classifier>sources</classifier>
+                                </configuration>
                             </execution>
                         </executions>
                     </plugin>
