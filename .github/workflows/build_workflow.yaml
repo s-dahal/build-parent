@@ -1,9 +1,9 @@
-﻿name: Build Pipeline
+name: Build Pipeline
 
 run-name: 'Build Pipeline For ${{github.ref_name}}'
 
 on:
-    pull_request:
+    pull_request_target:
 
 jobs:
   build-job:
@@ -49,6 +49,15 @@ jobs:
           with:
               java-version: '21'
               distribution: 'temurin'
+        - name: Settings.xml Config
+          uses: s4u/maven-settings-action@v2.3.0
+          with:
+             servers: |
+                  [{
+                      "id": "${{vars.NEXUS_SNAPSHOT_REPO_ID}}",
+                      "username": "${{ vars.NEXUS_USERNAME }}",
+                      "password": "${{ secrets.NEXUS_PASSWORD}}"
+                  }] 
         - name: Deploy To Nexus
           run: |
              mvn deploy \
@@ -59,5 +68,6 @@ jobs:
                 -DskipITs \
                 -Dmaven.main.skip \
                 -Dmaven.test.skip \
+                -s '/home/runner/.m2/settings.xml' \
                 -DrepositoryId='maven-snapshots' \
                 -Dgpg.passphrase= ${{secrets.GPG_PASSPHRASE}}
