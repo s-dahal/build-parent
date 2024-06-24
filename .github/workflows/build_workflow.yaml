@@ -70,4 +70,4 @@ jobs:
                 -Dmaven.test.skip \
                 -s '/home/runner/.m2/settings.xml' \
                 -DrepositoryId='maven-snapshots' \
-                -Dgpg.passphrase= ${{secrets.GPG_PASSPHRASE}}
+                -Dgpg.passphrase=${{secrets.GPG_PASSPHRASE}}

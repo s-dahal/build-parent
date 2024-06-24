@@ -10,3 +10,4 @@ The output of this project is solely a pom file and is distributed via standard 
 
 For a quick guide on how to make changes to this project, including new features or bug fixes, please click [here](doc/how-to-contribute.md).
 
+
