@@ -11,6 +11,8 @@ jobs:
     name: Build Job
     runs-on: ubuntu-latest
     steps:
+          - name: Print
+            run: echo ${{toJson(github)}}
           - name: Checkout Code Repository
             uses: actions/checkout@v4
           - name: Downloading Java
