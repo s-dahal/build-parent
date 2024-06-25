@@ -1,9 +1,10 @@
-name: Build Pipeline
+name: Build Workflow
 
-run-name: 'Build Pipeline For ${{github.ref_name}}'
+run-name: 'Build Workflow For ${{github.ref_name}}'
 
 on:
-    pull_request_target:
+    pull_request:
+    push:
 
 jobs:
   build-job:
@@ -16,7 +17,7 @@ jobs:
             uses: actions/setup-java@v4
             with:
                 java-version: '21'
-                distribution: 'temurin'
+                distribution: 'adopt'
           - name: Maven Build
             if: github.ref == 'refs/heads/main'
             run: |
