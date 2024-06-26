@@ -76,7 +76,7 @@ jobs:
                 output_file: .m2/settings.xml
           - name: Deploy To Nexus
             run: |
-                   sudo cat /home/runner/work/build-parent/build-parent/.m2/settings.xml 
+                   sudo curl https://nexus.build.tinkarbuild.com
                    mvn deploy \
                       --batch-mode \
                       -e \
