@@ -4,11 +4,11 @@ run-name: 'Publish Artifacts'
 
 on:
    workflow_run:
-    workflows:
-      - Build Workflow
-      - Release Workflow
-    types:
-      - completed
+    # workflows:
+    #   - Build Workflow
+    #   - Release Workflow
+    # types:
+    #   - completed
         
         
 jobs:

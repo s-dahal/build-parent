@@ -3,7 +3,6 @@ name: Build Workflow
 run-name: 'Build Workflow For ${{github.ref_name}}'
 
 on:
-    pull_request:
     push:
 
 jobs:
@@ -11,8 +10,6 @@ jobs:
     name: Build Job
     runs-on: ubuntu-latest
     steps:
-          - name: Print
-            run: echo ${{toJson(github)}}
           - name: Checkout Code Repository
             uses: actions/checkout@v4
           - name: Downloading Java
