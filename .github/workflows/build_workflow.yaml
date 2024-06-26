@@ -47,11 +47,6 @@ jobs:
                             "id": "${{vars.NEXUS_SNAPSHOT_REPO_ID}}",
                             "username": "${{ vars.NEXUS_USERNAME }}",
                             "password": "${{ secrets.NEXUS_PASSWORD}}"
-                          },
-                          {
-                            "id": "${{vars.NEXUS_MIRROR_ID}}",
-                            "username": "${{ vars.NEXUS_USERNAME }}",
-                            "password": "${{ secrets.NEXUS_PASSWORD}}"
                           }
                         ] 
                 profiles: >
