@@ -36,14 +36,42 @@ jobs:
                 -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn \
                 -PcodeQuality
           - name: Settings.xml Config
-            uses: s4u/maven-settings-action@v2.3.0
+            uses: whelk-io/maven-settings-xml-action@v22
             with:
-                servers: |
+                servers: > 
+                        [{
+                            "id": "nexus"
+                        }]
                         [{
                             "id": "${{vars.NEXUS_SNAPSHOT_REPO_ID}}",
                             "username": "${{ vars.NEXUS_USERNAME }}",
                             "password": "${{ secrets.NEXUS_PASSWORD}}"
+                        }]
+                        [{
+                            "id": "${{vars.NEXUS_MIRROR_ID}}",
+                            "username": "${{ vars.NEXUS_USERNAME }}",
+                            "password": "${{ secrets.NEXUS_PASSWORD}}"
                         }] 
+                profiles: >
+                       [{
+                            "id": "inject-application-properties"
+                            "properties": {
+                                "altSnapshotDeploymentRepository": "${{vars.NEXUS_SNAPSHOT_REPO_ID}}::${{vars.NEXUS_SNAPSHOT_REPO_URL}}",
+                                "altReleaseDeploymentRepository": "${{vars.NEXUS_SNAPSHOT_REPO_ID}}::${{vars.NEXUS_RELEASE_REPO_URL}}"
+                            }
+                       }]
+                active_profiles: > 
+                       [
+                          "inject-application-properties"
+                       ]
+                mirrors: >
+                       [{
+                           "id": "${{vars.NEXUS_MIRROR_ID}}",
+                           "name": "${{vars.NEXUS_MIRROR_ID}}",
+                           "url": "${{vars.NEXUS_MIRROR_URL}}",
+                           "mirrorOf": "*"
+                       }]
+                output_file: .m2/settings.xml
           - name: Deploy To Nexus
             run: |
                    mvn deploy \
@@ -55,6 +83,5 @@ jobs:
                       -Dmaven.main.skip \
                       -Dmaven.test.skip \
                       -s '/home/runner/.m2/settings.xml' \
-                      -DaltDeploymentRepository=${{vars.NEXUS_SNAPSHOT_REPO_ID}}::https://nexus.build.tinkarbuild.com/repository/maven-snapshots/
                       -DrepositoryId='maven-snapshots' \
                       -Dgpg.passphrase=${{secrets.GPG_PASSPHRASE}}
