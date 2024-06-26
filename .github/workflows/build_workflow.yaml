@@ -47,6 +47,11 @@ jobs:
                             "id": "${{vars.NEXUS_SNAPSHOT_REPO_ID}}",
                             "username": "${{ vars.NEXUS_USERNAME }}",
                             "password": "${{ secrets.NEXUS_PASSWORD}}"
+                          },
+                          {
+                            "id": "${{vars.NEXUS_MIRROR_ID}}",
+                            "username": "${{ vars.NEXUS_USERNAME }}",
+                            "password": "${{ secrets.NEXUS_PASSWORD}}"
                           }
                         ] 
                 profiles: >
@@ -54,7 +59,7 @@ jobs:
                             "id": "inject-application-properties",
                             "properties": {
                                 "altSnapshotDeploymentRepository": "${{vars.NEXUS_SNAPSHOT_REPO_ID}}::${{vars.NEXUS_SNAPSHOT_REPO_URL}}",
-                                "altReleaseDeploymentRepository": "${{vars.NEXUS_SNAPSHOT_REPO_ID}}::${{vars.NEXUS_RELEASE_REPO_URL}}"
+                                "altReleaseDeploymentRepository": "${{vars.NEXUS_RELEASE_REPO_ID}}::${{vars.NEXUS_RELEASE_REPO_URL}}"
                             }
                        }]
                 active_profiles: > 
@@ -68,9 +73,10 @@ jobs:
                            "url": "${{vars.NEXUS_MIRROR_URL}}",
                            "mirrorOf": "*"
                        }]
-                output_file: /home/runner/.m2/settings.xml
+                output_file: .m2/settings.xml
           - name: Deploy To Nexus
             run: |
+                   sudo cat /home/runner/work/build-parent/build-parent/.m2/settings.xml 
                    mvn deploy \
                       --batch-mode \
                       -e \
@@ -79,6 +85,6 @@ jobs:
                       -DskipITs \
                       -Dmaven.main.skip \
                       -Dmaven.test.skip \
-                      -s '/home/runner/.m2/settings.xml' \
+                      -s '/home/runner/work/build-parent/build-parent/.m2/settings.xml' \
                       -DrepositoryId='maven-snapshots' \
                       -Dgpg.passphrase=${{secrets.GPG_PASSPHRASE}}
