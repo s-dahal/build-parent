@@ -54,6 +54,7 @@ jobs:
                       -DskipITs \
                       -Dmaven.main.skip \
                       -Dmaven.test.skip \
+                      -Durl=https://nexus.build.tinkarbuild.com/repository/maven-snapshots
                       -s '/home/runner/.m2/settings.xml' \
                       -DrepositoryId='maven-snapshots' \
                       -Dgpg.passphrase=${{secrets.GPG_PASSPHRASE}}
