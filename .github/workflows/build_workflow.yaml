@@ -56,7 +56,7 @@ jobs:
                         ] 
                 profiles: >
                        [{
-                            "id": "inject-application-properties"
+                            "id": "inject-application-properties",
                             "properties": {
                                 "altSnapshotDeploymentRepository": "${{vars.NEXUS_SNAPSHOT_REPO_ID}}::${{vars.NEXUS_SNAPSHOT_REPO_URL}}",
                                 "altReleaseDeploymentRepository": "${{vars.NEXUS_SNAPSHOT_REPO_ID}}::${{vars.NEXUS_RELEASE_REPO_URL}}"
