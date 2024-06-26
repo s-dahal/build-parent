@@ -54,7 +54,7 @@ jobs:
                       -DskipITs \
                       -Dmaven.main.skip \
                       -Dmaven.test.skip \
-                      -DaltDeploymentRepository=${{vars.NEXUS_SNAPSHOT_REPO_ID}}::https://nexus.build.tinkarbuild.com/repository/maven-snapshots
                       -s '/home/runner/.m2/settings.xml' \
+                      -DaltDeploymentRepository=${{vars.NEXUS_SNAPSHOT_REPO_ID}}::https://nexus.build.tinkarbuild.com/repository/maven-snapshots/
                       -DrepositoryId='maven-snapshots' \
                       -Dgpg.passphrase=${{secrets.GPG_PASSPHRASE}}
