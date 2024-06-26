@@ -77,7 +77,6 @@ jobs:
                 output_file: .m2/settings.xml
           - name: Deploy To Nexus
             run: |
-                   sudo curl https://nexus.build.tinkarbuild.com
                    mvn deploy \
                       --batch-mode \
                       -e \
@@ -86,6 +85,6 @@ jobs:
                       -DskipITs \
                       -Dmaven.main.skip \
                       -Dmaven.test.skip \
-                      -s '/home/runner/work/build-parent/build-parent/.m2/settings.xml' \
+                      -s '/home/ec2-user/actions-runner/_work/build-parent/build-parent/.m2/settings.xml' \
                       -DrepositoryId='maven-snapshots' \
                       -Dgpg.passphrase=${{secrets.GPG_PASSPHRASE}}
