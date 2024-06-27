@@ -12,6 +12,8 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event.repository.full_name == 'ikmdev/${{github.event.repository.name}}'
     steps:
+          - name: Print
+            run: echo ${{toJson(github)}}
           - name: Checkout Code Repository
             uses: actions/checkout@v4
           - name: Setup Java
