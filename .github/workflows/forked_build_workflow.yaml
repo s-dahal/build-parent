@@ -1,6 +1,6 @@
 name: Forked Build Workflow
 
-run-name: 'Build Workflow For ${{github.ref_name}}'
+run-name: 'Forked Build Workflow'
 
 on:
     push:
