@@ -4,11 +4,11 @@ run-name: 'Publish Artifacts'
 
 on:
    workflow_run:
-    # workflows:
-    #   - Build Workflow
-    #   - Release Workflow
-    # types:
-    #   - completed
+    workflows:
+      - Build Workflow
+      - Release Workflow
+    types:
+      - completed
         
         
 jobs:
@@ -39,14 +39,68 @@ jobs:
           if:   github.event.workflow_run.event != 'pull_request'
           uses: actions/checkout@v4
 
-        - name: Downloading Java
-          uses: actions/setup-java@v4
+        - name: Setup Maven Action
+          uses: s4u/setup-maven-action@v1.7.0
           with:
-            java-version: '21'
-            distribution: 'adopt'
+            checkout-fetch-depth: 0
+            java-version: 21
+            java-distribution: temurin
+            maven-version: 3.8.7
 
-        - name: Publish To Nexus Repository Manager
-          run: echo "Publishing to Nexus Repo -- ${{env.ARTIFACT_REPOSITORY_ID}}"
+        - name: Settings.xml Config
+          uses: whelk-io/maven-settings-xml-action@v22
+          with:
+                servers: > 
+                        [
+                          {
+                            "id": "nexus"
+                          },
+                          {
+                            "id": "${{vars.NEXUS_SNAPSHOT_REPO_ID}}",
+                            "username": "${{ vars.NEXUS_USERNAME }}",
+                            "password": "${{ secrets.NEXUS_PASSWORD}}"
+                          },
+                          {
+                            "id": "${{vars.NEXUS_MIRROR_ID}}",
+                            "username": "${{ vars.NEXUS_USERNAME }}",
+                            "password": "${{ secrets.NEXUS_PASSWORD}}"
+                          }
+                        ] 
+                profiles: >
+                       [{
+                            "id": "inject-application-properties",
+                            "properties": {
+                                "altSnapshotDeploymentRepository": "${{vars.NEXUS_SNAPSHOT_REPO_ID}}::${{vars.NEXUS_SNAPSHOT_REPO_URL}}",
+                                "altReleaseDeploymentRepository": "${{vars.NEXUS_RELEASE_REPO_ID}}::${{vars.NEXUS_RELEASE_REPO_URL}}"
+                            }
+                       }]
+                active_profiles: > 
+                       [
+                          "inject-application-properties"
+                       ]
+                mirrors: >
+                       [{
+                           "id": "${{vars.NEXUS_MIRROR_ID}}",
+                           "name": "${{vars.NEXUS_MIRROR_ID}}",
+                           "url": "${{vars.NEXUS_MIRROR_URL}}",
+                           "mirrorOf": "*"
+                       }]
+                output_file: .m2/settings.xml
+
+        - name: Deploy To Nexus
+          run: |
+                   mvn deploy \
+                      --batch-mode \
+                      -e \
+                      -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn \
+                      -DskipTests \
+                      -DskipITs \
+                      -Dmaven.main.skip \
+                      -Dmaven.test.skip \
+                      -s '/home/ec2-user/actions-runner/_work/${{github.event.repository.name}}/${{github.event.repository.name}}/.m2/settings.xml' \
+                      -DrepositoryId='maven-snapshots' \
+                      -Dgpg.passphrase=${{secrets.GPG_PASSPHRASE}}
+
 
         - name: Publish To OSSRH (Maven Central Staging)
           if: github.event.workflow.name == 'Release Workflow'
