@@ -38,8 +38,9 @@ jobs:
         - name: Copy Code Base To Temporary Folder
           if:   github.event.workflow_run.event == 'pull_request'
           run: |
-            sudo mkdir temp_codebase/${{github.event.repository.name}}
-            sudo cp -R /home/ec2-user/actions-runner/_work/build-parent/build-parent /temp_codebase/${{github.event.repository.name}}
+            cd ~
+            sudo mkdir temp_code_folder/${{github.event.repository.name}}
+            sudo cp -R /home/ec2-user/actions-runner/_work/build-parent/build-parent /temp_code_folder/${{github.event.repository.name}}
             cd /temp_codebase/${{github.event.repository.name}}
 
         - name: Checkout Code Repository
@@ -94,7 +95,7 @@ jobs:
                        }]
                 output_file: .m2/settings.xml
 
-        - name: Deploy To Nexus
+        - name: Deploy To Nexuss
           run: |
                    mvn deploy \
                       --batch-mode \
