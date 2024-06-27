@@ -35,6 +35,13 @@ jobs:
             repository: ${{env.REPOSITORY_NAME}}
             ref: ${{env.BRANCH}}
 
+        - name: Copy Code Base To Temporary Folder
+          if:   github.event.workflow_run.event == 'pull_request'
+          run: |
+            sudo mkdir temp_codebase/${{github.event.repository.name}}
+            sudo cp -R /home/ec2-user/actions-runner/_work/build-parent/build-parent /temp_codebase/${{github.event.repository.name}}
+            cd /temp_codebase/${{github.event.repository.name}}
+
         - name: Checkout Code Repository
           if:   github.event.workflow_run.event != 'pull_request'
           uses: actions/checkout@v4
