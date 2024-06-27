@@ -39,6 +39,7 @@ jobs:
           if:   github.event.workflow_run.event == 'pull_request'
           run: |
             cd ~
+            ls
             cd temp_code_folder
             sudo mkdir ${{github.event.repository.name}}
             cd ~
