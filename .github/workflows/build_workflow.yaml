@@ -4,6 +4,7 @@ run-name: 'Build Workflow For ${{github.ref_name}}'
 
 on:
     push:
+    pull_request:
 
 jobs:
   build-job:
