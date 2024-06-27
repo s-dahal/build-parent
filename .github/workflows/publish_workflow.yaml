@@ -15,7 +15,7 @@ jobs:
   publish-artifacts:
       name: Publish Artifacts
       runs-on: self-hosted
-      if: github.event.workflow_run.conclusion == 'success'
+      if: github.event.workflow_run.conclusion == 'success' && !(github.event.workflow_run.event == 'push' && github.event.repository.full_name == 'ikmdev/${{github.event.repository.name}}')
       env:
         ARTIFACT_REPOSITORY_ID: "maven-releases"
         REPOSITORY_NAME: ${{github.repository}}
@@ -98,7 +98,7 @@ jobs:
                       -Dmaven.main.skip \
                       -Dmaven.test.skip \
                       -s '/home/ec2-user/actions-runner/_work/${{github.event.repository.name}}/${{github.event.repository.name}}/.m2/settings.xml' \
-                      -DrepositoryId='maven-snapshots' \
+                      -DrepositoryId='${{env.ARTIFACT_REPOSITORY_ID}}' \
                       -Dgpg.passphrase=${{secrets.GPG_PASSPHRASE}}
 
 
