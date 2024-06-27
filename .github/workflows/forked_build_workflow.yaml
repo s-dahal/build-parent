@@ -10,7 +10,7 @@ jobs:
   build-job:
     name: Build Job
     runs-on: ubuntu-latest
-    if: github.repository != 'ikmdev/${{github.event.repository.name}}' && github.event.repository.fork == 'true'
+    if: github.repository_owner != 'ikmdev' || github.event.repository.fork == 'true'
     steps:
           - name: Checkout Code Repository
             uses: actions/checkout@v4
