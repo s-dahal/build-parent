@@ -94,7 +94,7 @@ jobs:
                        }]
                 output_file: .m2/settings.xml
 
-        - name: Deploy To Nexus
+        - name: Deploy To Nexuss
           run: |
                    mvn deploy \
                       --batch-mode \
