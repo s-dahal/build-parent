@@ -96,7 +96,7 @@ jobs:
                            "url": "${{vars.NEXUS_MIRROR_URL}}",
                            "mirrorOf": "*"
                        }]
-                output_file: .m2/settings.xml
+                output_file: /home/ec2-user/maven/.m2/settings.xml
 
         - name: Deploy To Nexus
           run: |
