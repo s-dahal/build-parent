@@ -132,7 +132,7 @@ jobs:
 
   #Setting next development version
   set_next_dev:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     name: Set Next Development Version
     needs:
       - initialization
