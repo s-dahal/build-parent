@@ -20,7 +20,7 @@ env:
 # Define jobs within the workflow
 jobs:
   initialization:
-    #if: github.event.repository.owner == 'ikmdev'
+    if: github.repository_owner == 'ikmdev'
     runs-on: ubuntu-latest
     name: Initialization
     outputs:
@@ -28,9 +28,6 @@ jobs:
       RELEASE_VERSION: ${{steps.splitCurrentVersion.outputs._0}}
 
     steps:
-
-      - name: print
-        run: echo ${{toJson(github)}}
       - name: Verify Branch
         if: env.BRANCH_NAME != env.TRUNK_BRANCH_NAME
         run: |
