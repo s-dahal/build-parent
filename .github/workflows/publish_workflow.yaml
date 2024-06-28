@@ -16,10 +16,13 @@ jobs:
       name: Publish Artifacts
       runs-on: self-hosted
       if: github.event.workflow_run.conclusion == 'success'
+
       env:
         ARTIFACT_REPOSITORY_ID: "maven-snapshots"
         REPOSITORY_NAME: ${{github.repository}}
-        BRANCH: "main"  
+        BRANCH: "main"
+        MAVEN_FILE: '/home/ec2-user/maven/.m2/settings.xml'
+
       steps:  
         - name: Setup Maven Action
           uses: s4u/setup-maven-action@v1.7.0
@@ -44,8 +47,13 @@ jobs:
           id: getRecentTag
           if: github.event.workflow_run.name == 'Release Workflow'
           run:  echo "tag=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
+        
+        - name: If Release Change Artifact Repository ID
+          if: github.event.workflow_run.name == 'Release Workflow'
+          run: echo "ARTIFACT_REPOSITORY_ID=maven-releases" >> $GITHUB_OUTPUTS
 
         - name: Print Output
+          if: github.event.workflow_run.name == 'Release Workflow'
           run: echo ${{steps.getRecentTag.outputs.tag}}
 
         - name: Checkout Tag Code 
@@ -54,46 +62,6 @@ jobs:
           with:
             ref: ${{steps.getRecentTag.outputs.tag}}
 
-
-        - name: Settings.xml Config
-          uses: whelk-io/maven-settings-xml-action@v22
-          with:
-                servers: > 
-                        [
-                          {
-                            "id": "nexus"
-                          },
-                          {
-                            "id": "${{vars.NEXUS_SNAPSHOT_REPO_ID}}",
-                            "username": "${{ vars.NEXUS_USERNAME }}",
-                            "password": "${{ secrets.NEXUS_PASSWORD}}"
-                          },
-                          {
-                            "id": "${{vars.NEXUS_MIRROR_ID}}",
-                            "username": "${{ vars.NEXUS_USERNAME }}",
-                            "password": "${{ secrets.NEXUS_PASSWORD}}"
-                          }
-                        ] 
-                profiles: >
-                       [{
-                            "id": "inject-application-properties",
-                            "properties": {
-                                "altSnapshotDeploymentRepository": "${{vars.NEXUS_SNAPSHOT_REPO_ID}}::${{vars.NEXUS_SNAPSHOT_REPO_URL}}",
-                                "altReleaseDeploymentRepository": "${{vars.NEXUS_RELEASE_REPO_ID}}::${{vars.NEXUS_RELEASE_REPO_URL}}"
-                            }
-                       }]
-                active_profiles: > 
-                       [
-                          "inject-application-properties"
-                       ]
-                mirrors: >
-                       [{
-                           "id": "${{vars.NEXUS_MIRROR_ID}}",
-                           "name": "${{vars.NEXUS_MIRROR_ID}}",
-                           "url": "${{vars.NEXUS_MIRROR_URL}}",
-                           "mirrorOf": "*"
-                       }]
-                output_file: /home/ec2-user/maven/.m2/settings.xml
 
         - name: Deploy To Nexus
           run: |
@@ -105,7 +73,7 @@ jobs:
                       -DskipITs \
                       -Dmaven.main.skip \
                       -Dmaven.test.skip \
-                      -s '/home/ec2-user/actions-runner/_work/${{github.event.repository.name}}/${{github.event.repository.name}}/.m2/settings.xml' \
+                      -s ${{env.MAVEN_FILE}} \
                       -DrepositoryId='${{env.ARTIFACT_REPOSITORY_ID}}' \
                       -Dgpg.passphrase=${{secrets.GPG_PASSPHRASE}}
 
