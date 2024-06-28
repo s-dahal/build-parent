@@ -142,9 +142,6 @@ jobs:
       contents: write
 
     steps:
-      - name: Checkout Code Repository
-        uses: actions/checkout@v4
-
       - name: Setup Maven Action
         uses: s4u/setup-maven-action@v1.7.0
         with:
@@ -162,6 +159,7 @@ jobs:
 
       - name: Commit & Push
         run: |
+          git remote add origin git@github.com:ikmdev/${{github.event.repository.name}}.git
           git config user.name Cloud User
           git add .
           git commit -m 'Set next dev version to ${{needs.initialization.outputs.NEXT_SNAPSHOT_VERSION}}'
