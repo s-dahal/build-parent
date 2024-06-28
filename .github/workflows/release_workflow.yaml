@@ -61,7 +61,7 @@ jobs:
         id: splitCurrentVersion
         with:
           string: ${{env.POM_VERSION}}
-          separator: -SNAPSHOT
+          separator: '-'
           limit: -1
 
       - name: Split version code - Separate By .
