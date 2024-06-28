@@ -162,6 +162,7 @@ jobs:
 
       - name: Commit & Push
         run: |
+          git config user.name Cloud User
           git add .
           git commit -m 'Set next dev version to ${{needs.initialization.outputs.NEXT_SNAPSHOT_VERSION}}'
           git push origin HEAD:main
