@@ -14,9 +14,6 @@ jobs:
     runs-on: self-hosted
     if: github.repository_owner == 'ikmdev'
     steps:
-          - name: Print Stuff
-            run: echo ${{toJson(github)}}
-
           - name: Checkout Code Repository
             uses: actions/checkout@v4
             with:
