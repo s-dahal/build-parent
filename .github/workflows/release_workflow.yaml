@@ -142,6 +142,8 @@ jobs:
       contents: write
 
     steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
       - name: Setup Java
         uses: actions/setup-java@v4
         with:
