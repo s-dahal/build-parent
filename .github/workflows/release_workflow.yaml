@@ -142,13 +142,11 @@ jobs:
       contents: write
 
     steps:
-      - name: Setup Maven Action
-        uses: s4u/setup-maven-action@v1.14.0
+      - name: Setup Java
+        uses: actions/setup-java@v4
         with:
-          checkout-fetch-depth: 0
-          java-version: 21
-          java-distribution: adopt
-          maven-version: 3.9.0
+          distribution: 'adopt'
+          java-version: '21'
 
     #   - name: Settings.xml Config
     #     uses: whelk-io/maven-settings-xml-action@v22
