@@ -121,27 +121,26 @@ jobs:
           git add .
           git commit -m 'Release ${{needs.initialization.outputs.RELEASE_VERSION}}'
           git tag -a ${{needs.initialization.outputs.RELEASE_VERSION}} -m '${{needs.initialization.outputs.RELEASE_VERSION}}' --force
-          git push origin HEAD:main
 
   #Setting next development version
-  set_next_dev:
-    runs-on: ubuntu-latest
-    name: Set Next Development Version
-    needs:
-      - initialization
-      - set_build_and_tag_release
+#   set_next_dev:
+#     runs-on: ubuntu-latest
+#     name: Set Next Development Version
+#     needs:
+#       - initialization
+#       - set_build_and_tag_release
 
-    permissions:
-      contents: write
+#     permissions:
+#       contents: write
 
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
-      - name: Setup Java
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'adopt'
-          java-version: '21'
+#     steps:
+#       - name: Checkout Code
+#         uses: actions/checkout@v4
+#       - name: Setup Java
+#         uses: actions/setup-java@v4
+#         with:
+#           distribution: 'adopt'
+#           java-version: '21'
 
     #   - name: Settings.xml Config
     #     uses: whelk-io/maven-settings-xml-action@v22
