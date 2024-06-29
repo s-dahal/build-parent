@@ -160,6 +160,7 @@ jobs:
       - name: Commit & Push
         run: |
           git config user.name OmOmofonmwan
+          git config user.email oomofonmwan93@gmail.com
           git add .
           git commit -m 'Set next dev version to ${{needs.initialization.outputs.NEXT_SNAPSHOT_VERSION}}'
           git push upstream HEAD:main
