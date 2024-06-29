@@ -193,7 +193,7 @@ jobs:
       - name: Set Dev Version
         run: |
           mvn -B versions:set \
-          -s ${{env.MAVEN_FILE}} \
+          -s '/home/runner/.m2/settings.xml' \
           -DnewVersion=${{needs.initialization.outputs.NEXT_SNAPSHOT_VERSION}} \
           -DgenerateBackupPoms=false
 
