@@ -6,7 +6,7 @@ on:
    workflow_run:
     workflows:
       - Build Workflow
-      - Release Workflow
+      - Release Workflo
     types:
       - completed
         

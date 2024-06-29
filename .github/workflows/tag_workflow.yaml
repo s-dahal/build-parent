@@ -19,6 +19,8 @@ jobs:
 
           - name: Checkout Code Repository
             uses: actions/checkout@v4
+            with:
+                ref: ${{github.ref}}
 
           - name: Setup Maven Action
             uses: s4u/setup-maven-action@v1.14.0
