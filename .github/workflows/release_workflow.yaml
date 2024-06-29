@@ -150,50 +150,49 @@ jobs:
           java-distribution: adopt
           maven-version: 3.9.0
 
-      - name: Settings.xml Config
-        uses: whelk-io/maven-settings-xml-action@v22
-        with:
-            servers: > 
-                        [
-                          {
-                            "id": "nexus"
-                          },
-                          {
-                            "id": "${{vars.NEXUS_SNAPSHOT_REPO_ID}}",
-                            "username": "${{ vars.NEXUS_USERNAME }}",
-                            "password": "${{ secrets.NEXUS_PASSWORD}}"
-                          },
-                          {
-                            "id": "${{vars.NEXUS_MIRROR_ID}}",
-                            "username": "${{ vars.NEXUS_USERNAME }}",
-                            "password": "${{ secrets.NEXUS_PASSWORD}}"
-                          }
-                        ] 
-            profiles: >
-                       [{
-                            "id": "inject-application-properties",
-                            "properties": {
-                                "altSnapshotDeploymentRepository": "${{vars.NEXUS_SNAPSHOT_REPO_ID}}::${{vars.NEXUS_SNAPSHOT_REPO_URL}}",
-                                "altReleaseDeploymentRepository": "${{vars.NEXUS_RELEASE_REPO_ID}}::${{vars.NEXUS_RELEASE_REPO_URL}}"
-                            }
-                       }]
-            active_profiles: > 
-                       [
-                          "inject-application-properties"
-                       ]
-            mirrors: >
-                       [{
-                           "id": "${{vars.NEXUS_MIRROR_ID}}",
-                           "name": "${{vars.NEXUS_MIRROR_ID}}",
-                           "url": "${{vars.NEXUS_MIRROR_URL}}",
-                           "mirrorOf": "*"
-                       }]
-            output_file: /home/runner/.m2/settings.xml
+    #   - name: Settings.xml Config
+    #     uses: whelk-io/maven-settings-xml-action@v22
+    #     with:
+    #         servers: > 
+    #                     [
+    #                       {
+    #                         "id": "nexus"
+    #                       },
+    #                       {
+    #                         "id": "${{vars.NEXUS_SNAPSHOT_REPO_ID}}",
+    #                         "username": "${{ vars.NEXUS_USERNAME }}",
+    #                         "password": "${{ secrets.NEXUS_PASSWORD}}"
+    #                       },
+    #                       {
+    #                         "id": "${{vars.NEXUS_MIRROR_ID}}",
+    #                         "username": "${{ vars.NEXUS_USERNAME }}",
+    #                         "password": "${{ secrets.NEXUS_PASSWORD}}"
+    #                       }
+    #                     ] 
+    #         profiles: >
+    #                    [{
+    #                         "id": "inject-application-properties",
+    #                         "properties": {
+    #                             "altSnapshotDeploymentRepository": "${{vars.NEXUS_SNAPSHOT_REPO_ID}}::${{vars.NEXUS_SNAPSHOT_REPO_URL}}",
+    #                             "altReleaseDeploymentRepository": "${{vars.NEXUS_RELEASE_REPO_ID}}::${{vars.NEXUS_RELEASE_REPO_URL}}"
+    #                         }
+    #                    }]
+    #         active_profiles: > 
+    #                    [
+    #                       "inject-application-properties"
+    #                    ]
+    #         mirrors: >
+    #                    [{
+    #                        "id": "${{vars.NEXUS_MIRROR_ID}}",
+    #                        "name": "${{vars.NEXUS_MIRROR_ID}}",
+    #                        "url": "${{vars.NEXUS_MIRROR_URL}}",
+    #                        "mirrorOf": "*"
+    #                    }]
+    #         output_file: /home/runner/.m2/settings.xml
 
       - name: Set Dev Version
         run: |
           mvn -B versions:set \
-          -s '/home/runner/.m2/settings.xml' \
           -DnewVersion=${{needs.initialization.outputs.NEXT_SNAPSHOT_VERSION}} \
           -DgenerateBackupPoms=false
 
