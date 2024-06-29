@@ -159,6 +159,8 @@ jobs:
 
       - name: Commit & Push
         run: |
+          echo pwd
+          ls
           git remote add upstream git@github.com:cloud/${{github.event.repository.name}}.git
           git config user.name Cloud User
           git add .
