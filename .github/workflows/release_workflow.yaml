@@ -121,6 +121,7 @@ jobs:
           git add .
           git commit -m 'Release ${{needs.initialization.outputs.RELEASE_VERSION}}'
           git tag -a ${{needs.initialization.outputs.RELEASE_VERSION}} -m '${{needs.initialization.outputs.RELEASE_VERSION}}' --force
+          git push origin HEAD:main
 
   #Setting next development version
   set_next_dev:
