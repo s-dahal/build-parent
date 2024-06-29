@@ -1,4 +1,4 @@
-name: Publish Pipeline
+name: Publish Artifacts Workflow
 
 run-name: 'Publish Artifacts'
 
