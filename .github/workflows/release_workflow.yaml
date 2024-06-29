@@ -132,7 +132,7 @@ jobs:
 
   #Setting next development version
   set_next_dev:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     name: Set Next Development Version
     needs:
       - initialization
@@ -150,6 +150,46 @@ jobs:
           java-distribution: adopt
           maven-version: 3.9.0
 
+      - name: Settings.xml Config
+        uses: whelk-io/maven-settings-xml-action@v22
+        with:
+            servers: > 
+                        [
+                          {
+                            "id": "nexus"
+                          },
+                          {
+                            "id": "${{vars.NEXUS_SNAPSHOT_REPO_ID}}",
+                            "username": "${{ vars.NEXUS_USERNAME }}",
+                            "password": "${{ secrets.NEXUS_PASSWORD}}"
+                          },
+                          {
+                            "id": "${{vars.NEXUS_MIRROR_ID}}",
+                            "username": "${{ vars.NEXUS_USERNAME }}",
+                            "password": "${{ secrets.NEXUS_PASSWORD}}"
+                          }
+                        ] 
+            profiles: >
+                       [{
+                            "id": "inject-application-properties",
+                            "properties": {
+                                "altSnapshotDeploymentRepository": "${{vars.NEXUS_SNAPSHOT_REPO_ID}}::${{vars.NEXUS_SNAPSHOT_REPO_URL}}",
+                                "altReleaseDeploymentRepository": "${{vars.NEXUS_RELEASE_REPO_ID}}::${{vars.NEXUS_RELEASE_REPO_URL}}"
+                            }
+                       }]
+            active_profiles: > 
+                       [
+                          "inject-application-properties"
+                       ]
+            mirrors: >
+                       [{
+                           "id": "${{vars.NEXUS_MIRROR_ID}}",
+                           "name": "${{vars.NEXUS_MIRROR_ID}}",
+                           "url": "${{vars.NEXUS_MIRROR_URL}}",
+                           "mirrorOf": "*"
+                       }]
+            output_file: /home/runner/.m2/settings.xml
+
       - name: Set Dev Version
         run: |
           mvn -B versions:set \
@@ -159,9 +199,8 @@ jobs:
 
       - name: Commit & Push
         run: |
-          git remote set-url origin https://$TEMP_TOKEN@github.com/${{github.repository}}
-          git config user.name OmOmofonmwan
-          git config user.email oomofonmwan93@gmail.com
+          git config user.name "${{ github.actor }}"
+          git config user.email "${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com"
           git add .
           git commit -m 'Set next dev version to ${{needs.initialization.outputs.NEXT_SNAPSHOT_VERSION}}'
           git push origin HEAD:main
