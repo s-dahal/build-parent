@@ -163,8 +163,8 @@ jobs:
           git config user.email oomofonmwan93@gmail.com
           git add .
           git commit -m 'Set next dev version to ${{needs.initialization.outputs.NEXT_SNAPSHOT_VERSION}}'
-          git push upstream HEAD:main
-          git push --tags upstream
+          git push origin HEAD:main
+          git push --tags origin
 
   # Creating a release
   create_release:
