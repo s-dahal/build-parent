@@ -14,11 +14,6 @@ jobs:
     runs-on: self-hosted
     if: github.repository_owner == 'ikmdev'
     steps:
-          - name: Checkout Code Repository
-            uses: actions/checkout@v4
-            with:
-                ref: ${{github.ref}}
-
           - name: Setup Maven Action
             uses: s4u/setup-maven-action@v1.14.0
             with:
@@ -26,6 +21,11 @@ jobs:
               java-version: 21
               java-distribution: adopt
               maven-version: 3.9.0
+
+          - name: Checkout Code Repository
+            uses: actions/checkout@v4
+            with:
+                ref: ${{github.ref}}
 
           - name: Maven Build
             run: |
@@ -52,7 +52,6 @@ jobs:
       
       
           - name: Publish To OSSRH (Maven Central Staging)
-            if: github.event.workflow.name == 'Release Workflow'
             run: |
                 mvn deploy \
                     --batch-mode \
