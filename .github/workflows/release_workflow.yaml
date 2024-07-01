@@ -210,13 +210,7 @@ jobs:
                     -Dmaven.test.skip \
                     -s ${{env.MAVEN_SETTING}} \
                     -DrepositoryId='maven-releases' \
-                    -Dgpg.passphrase=${{secrets.GPG_PASSPHRASE}}
-
-          - name: Configure GPG Key
-            run: |
-                echo -n "$GPG_SIGNING_KEY" | base64 --decode | gpg --import
-            env:
-                GPG_SIGNING_KEY: ${{ secrets.GPG_PASSPHRASE }}
+                    -Dgpg.passphrase=${{secrets.SELF_HOSTED_GPG_PASSPHRASE}}
       
       
           - name: Publish To OSSRH (Maven Central Staging)
@@ -232,4 +226,4 @@ jobs:
                     -s ${{env.MAVEN_SETTING}} \
                     -DrepositoryId='maven-releases' \
                     -DrepositoryIdOSSRH='true' \
-                    -PstageOSSRH -Dgpg.passphrase=$GPG_SIGNING_KEY
+                    -PstageOSSRH -Dgpg.passphrase=${{secrets.SELF_HOSTED_GPG_PASSPHRASE}}
