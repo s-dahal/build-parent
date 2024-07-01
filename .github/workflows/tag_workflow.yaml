@@ -64,4 +64,4 @@ jobs:
                     -s ${{env.MAVEN_SETTING}} \
                     -DrepositoryId='maven-releases' \
                     -DrepositoryIdOSSRH='true' \
-                    -PstageOSSRH -Dgpg.passphrase='${{secrets.GPG_PASSPHRASE}}'
+                    -PstageOSSRH -Dgpg.passphrase=${{secrets.GPG_PASSPHRASE}}
