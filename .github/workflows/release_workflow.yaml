@@ -119,7 +119,7 @@ jobs:
                           },
                           {
                             "id": "ossrh"
-                            "username": "${{ vars.OSSRH_TOKEN_USER }}",
+                            "username": "${{ secrets.OSSRH_TOKEN_USER }}",
                             "password": "${{ secrets.OSSRH_TOKEN_PASS}}"
                           }
                         ] 
