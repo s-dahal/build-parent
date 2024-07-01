@@ -119,7 +119,7 @@ jobs:
       - name: Create tag
         run: |
           git remote set-url origin https://git:${{secrets.GITHUB_TOKEN}}@github.com/${{github.repository}}.git
-          git config --global user.name "Cloud User"
+          git config user.name "Cloud User"
           git add .
           git commit -m 'Release ${{needs.initialization.outputs.RELEASE_VERSION}}'
           git tag -a ${{needs.initialization.outputs.RELEASE_VERSION}} -m '${{needs.initialization.outputs.RELEASE_VERSION}}' --force
