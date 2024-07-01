@@ -20,7 +20,7 @@ env:
 # Define jobs within the workflow
 jobs:
   initialization:
-    if: github.repository_owner != 'ikmdev'
+    if: github.repository_owner == 'ikmdev'
     runs-on: ubuntu-latest
     name: Initialization
     outputs:
