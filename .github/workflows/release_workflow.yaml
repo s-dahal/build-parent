@@ -140,7 +140,7 @@ jobs:
                            "url": "${{vars.NEXUS_MIRROR_URL}}",
                            "mirrorOf": "*"
                        }]
-            output_file: /home/runner/.m2/settings.xml
+            output_file: ${{env.MAVEN_SETTING}}
 
       - name: Set Release Version
         run: |
