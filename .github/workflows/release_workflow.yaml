@@ -118,7 +118,7 @@ jobs:
                             "password": "${{ secrets.NEXUS_PASSWORD}}"
                           },
                           {
-                            "id": "ossrh"
+                            "id": "ossrh",
                             "username": "${{ secrets.OSSRH_TOKEN_USER }}",
                             "password": "${{ secrets.OSSRH_TOKEN_PASS}}"
                           }
