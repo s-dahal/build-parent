@@ -2,7 +2,7 @@ name: Feature Branch Workflow
 
 run-name: "Feature Branch CI -- ${{github.event.inputs.action}} Action - feature/${{github.event.inputs.feature_branch}} "
 
-# Trigger workflow manually using the UI butto
+# Trigger workflow manually using the UI button
 on:
   workflow_dispatch:
     inputs:
