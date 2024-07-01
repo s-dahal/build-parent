@@ -119,6 +119,8 @@ jobs:
                           },
                           {
                             "id": "ossrh"
+                            "username": "${{ secrets.OSSRH_TOKEN_USER }}",
+                            "password": "${{ secrets.OSSRH_TOKEN_PASS}}"
                           }
                         ] 
             profiles: >
