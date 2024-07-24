@@ -71,7 +71,8 @@
 
         <!-- Command Line tooling -->
         <maven.dependency-plugin.version>3.6.0</maven.dependency-plugin.version>
-        <maven.assembly.version>3.6.0</maven.assembly.version>
+        <maven.assembly-plugin.version>3.7.1</maven.assembly-plugin.version>
+        <maven.assembly.version>${maven.assembly-plugin.version}</maven.assembly.version>
         <maven.wrapper-plugin.version>3.2.0</maven.wrapper-plugin.version>
 
         <!-- Release plugins -->
@@ -165,6 +166,12 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-dependency-plugin</artifactId>
                     <version>${maven.dependency-plugin.version}</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-assembly-plugin</artifactId>
+                    <version>${maven.assembly-plugin.version}</version>
                 </plugin>
 
                 <plugin>
