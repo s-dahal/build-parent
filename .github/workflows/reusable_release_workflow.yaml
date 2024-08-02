@@ -33,6 +33,8 @@ jobs:
       contents: write
 
     steps:
+      - name: Switch To EC2 User
+        run: su - ec2-user
       - name: Setup Maven Action
         uses: s4u/setup-maven-action@v1.14.0
         with:
