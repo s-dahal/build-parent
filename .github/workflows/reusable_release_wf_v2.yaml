@@ -63,7 +63,7 @@ jobs:
            git pull -p
            git add .
            git config user.name "ikmdevops"
-           git config user.email ${{secrets.IKMDEVOPS_EMAIL}}
+           git config user.email ${{vars.IKMDEVOPS_EMAIL}}
            git commit -m 'Release ${{inputs.release_version}}'
            git tag -a ${{inputs.release_version}} -m '${{inputs.release_version}}' --force
 
