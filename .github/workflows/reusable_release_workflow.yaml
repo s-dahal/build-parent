@@ -55,25 +55,27 @@ jobs:
 
       - name: Create tag
         run: |
-          git remote set-url origin https://git:${{secrets.GITHUB_TOKEN}}@github.com/${{github.repository}}.git
-          git config user.name "Cloud User"
-          git add .
-          git commit -m 'Release ${{inputs.release_version}}'
-          git tag -a ${{inputs.release_version}} -m '${{inputs.release_version}}' --force
+          sudo -u ec2-user bash -c \
+          'git remote set-url origin https://git:${{secrets.GITHUB_TOKEN}}@github.com/${{github.repository}}.git;
+           git add .;
+           git commit -m 'Release ${{inputs.release_version}}';
+           git tag -a ${{inputs.release_version}} -m '${{inputs.release_version}}' --force;'
 
       - name: Set Dev Version
         run: |
-          mvn -B versions:set \
+         sudo -u ec2-user bash -c \
+          'mvn -B versions:set \
           -s ${{env.MAVEN_SETTING}} \
           -DnewVersion=${{inputs.snapshot_version}} \
-          -DgenerateBackupPoms=false
+          -DgenerateBackupPoms=false'
 
       - name: Commit & Push
         run: |
-          git add .
-          git commit -m 'Set next dev version to ${{inputs.snapshot_version}}'
-          git push origin HEAD:main
-          git push --tags origin
+          sudo -u ec2-user bash -c \
+          'git add .;
+           git commit -m 'Set next dev version to ${{inputs.snapshot_version}}';
+           git push origin HEAD:main;
+           git push --tags origin;'
 
   # Creating a release
   create_release:
