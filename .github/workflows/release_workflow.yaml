@@ -84,7 +84,7 @@ jobs:
   call_release_workflow_with_custom_inputs:
     name: Call Reusable Workflow With Inputs
     needs: initialization
-    uses: ikmdev/build-parent/.github/workflows/reusable_release_workflow.yaml@main
+    uses: ikmdev/build-parent/.github/workflows/reusable_release_wf_v2.yaml@main
     permissions: write-all
     secrets: inherit
     with:
