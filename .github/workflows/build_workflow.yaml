@@ -15,14 +15,6 @@ jobs:
     runs-on: self-hosted
     if: github.repository_owner == 'ikmdev'
     steps:
-          - name: Setup Maven Action
-            uses: s4u/setup-maven-action@v1.14.0
-            with:
-             checkout-fetch-depth: 0
-             java-version: 21
-             java-distribution: adopt
-             maven-version: 3.9.0
-
           - name: Maven Build
             if: github.ref == 'refs/heads/main'
             run: |

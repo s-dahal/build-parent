@@ -33,32 +33,25 @@ jobs:
       contents: write
 
     steps:
-      - name: Switch To EC2 User
-        run: su - ec2-user
-      - name: Setup Maven Action
-        uses: s4u/setup-maven-action@v1.14.0
-        with:
-          checkout-fetch-depth: 0
-          java-version: 21
-          java-distribution: adopt
-          maven-version: 3.9.0
-
       - name: Set Release Version
         run: |
-          mvn -B versions:set \
+          sudo -u ec2-user bash -c \
+          'sudo chown -R "$USER" /home/ec2-user/actions-runner/_work/${{github.event.repository.name}}/${{github.event.repository.name}};
+           mvn -B versions:set \
           -s ${{env.MAVEN_SETTING}} \
           -DnewVersion=${{inputs.release_version}} \
-          -DgenerateBackupPoms=false
+          -DgenerateBackupPoms=false'
 
       - name: Build Release Version
         run: |
-          mvn -version
-          mvn clean install \
+          sudo -u ec2-user bash -c \
+          'mvn -version
+           mvn clean install \
                 -s ${{env.MAVEN_SETTING}} \
                 --batch-mode \
                 -e \
                 -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn \
-                -PcodeQuality,release-enforcement
+                -PcodeQuality,release-enforcement'
 
       - name: Create tag
         run: |
@@ -118,14 +111,6 @@ jobs:
     needs:
         - create_release
     steps:
-          - name: Setup Maven Action
-            uses: s4u/setup-maven-action@v1.14.0
-            with:
-              checkout-fetch-depth: 0
-              java-version: 21
-              java-distribution: adopt
-              maven-version: 3.9.0
-
           - name: Checkout Code Repository
             uses: actions/checkout@v4
             with:
