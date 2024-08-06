@@ -1,4 +1,4 @@
-name: Reusable Release Workflow
+name: Reusable Release Workflow V2
 
 run-name: "Releasing ${{ github.event.repository.name }} #${{github.run_number}}"
 
@@ -35,6 +35,8 @@ jobs:
     steps:
       - name: Checkout Code Repository
         uses: actions/checkout@v4
+        with:
+          token: ${{secrets.IKMDEVOPS_PAT_TOKEN}}
 
       - name: Setup Java
         uses: actions/setup-java@v4
@@ -59,7 +61,7 @@ jobs:
 
       - name: Create tag
         run: |
-           git remote set-url origin https://git:${{secrets.GITHUB_TOKEN}}@github.com/${{github.repository}}.git
+           git remote set-url origin https://git:${{secrets.IKMDEVOPS_PAT_TOKEN}}@github.com/${{github.repository}}.git
            git pull -p
            git add .
            git config user.name "ikmdevops"
