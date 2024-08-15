@@ -22,7 +22,7 @@ jobs:
           echo "ERROR: Attempting to release from branch ${{env.BRANCH_NAME}}. Release from ${{env.TRUNK_BRANCH_NAME}} branch only"
           exit 1
 
-      - name: Build IKMDEV Code
+      - name: Release IKMDEV Code
         uses: ikmdev/maven-release-action@main
         with:
           ikmdevops_pat: ${{secrets.IKMDEVOPS_PAT_TOKEN}}
