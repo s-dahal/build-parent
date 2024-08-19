@@ -48,7 +48,6 @@
         <maven.spotbugs-plugin.version>4.7.3.6</maven.spotbugs-plugin.version>
         <jlgrock.checkstyle.version>2.1.0</jlgrock.checkstyle.version>
         <maven.pom-check-maven-plugin.version>1.0.0</maven.pom-check-maven-plugin.version>
-        <maven.mycila.version>2.2.0</maven.mycila.version>
         <junit.version>5.10.0</junit.version>
         <slf4j.version>2.0.13</slf4j.version>
 
@@ -306,28 +305,6 @@
             <build>
                 <!-- apply licenses to all java source files -->
                 <plugins>
-                    <plugin>
-                        <groupId>com.mycila</groupId>
-                        <artifactId>license-maven-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>apply-license-to-source</id>
-                                <goals>
-                                    <goal>format</goal>
-                                </goals>
-                                <phase>generate-sources</phase>
-                                <configuration>
-                                    <licenseSets>
-                                        <licenseSet>
-                                            <header>com/mycila/maven/plugin/license/templates/APACHE-2.txt</header>
-                                        </licenseSet>
-                                    </licenseSets>
-                                    <basedir>${basedir}/src/main/java</basedir>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-
                     <!-- Generate Java Doc jar -->
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
@@ -405,29 +382,6 @@
                                 <goals>
                                     <goal>test-jar</goal>
                                 </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-
-                    <!-- apply licenses to all java test source files -->
-                    <plugin>
-                        <groupId>com.mycila</groupId>
-                        <artifactId>license-maven-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>apply-license-to-test-source</id>
-                                <goals>
-                                    <goal>format</goal>
-                                </goals>
-                                <phase>generate-sources</phase>
-                                <configuration>
-                                    <licenseSets>
-                                        <licenseSet>
-                                            <header>com/mycila/maven/plugin/license/templates/APACHE-2.txt</header>
-                                        </licenseSet>
-                                    </licenseSets>
-                                    <basedir>${basedir}/src/test/java</basedir>
-                                </configuration>
                             </execution>
                         </executions>
                     </plugin>

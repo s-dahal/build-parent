@@ -180,42 +180,6 @@
                     <version>${maven.enforcer-plugin.version}</version>
                 </plugin>
 
-                <!-- Adds the license headers to the top of each file -->
-                <plugin>
-                    <groupId>com.mycila</groupId>
-                    <artifactId>license-maven-plugin</artifactId>
-                    <version>${maven-license-plugin.version}</version>
-                    <configuration>
-                        <properties>
-                            <owner>${project.organization.name}</owner>
-                            <email>support@ikm.dev</email>
-                        </properties>
-                        <excludes>
-                            <exclude>**/*.md</exclude>
-                            <exclude>**/.editorconfig</exclude>
-                            <exclude>**/.gitignore</exclude>
-                            <exclude>**/.gitattributes</exclude>
-                            <exclude>**/.dockerignore</exclude>
-                            <exclude>**/*.yaml</exclude>
-                            <exclude>**/*.yml</exclude>
-                            <exclude>**/.mvn/**/*</exclude>
-                            <exclude>**/src/test/resources/**</exclude>
-                            <exclude>**/src/main/resources/**</exclude>
-                            <exclude>**/*.cmd</exclude>
-                            <exclude>**/*.bat</exclude>
-                            <exclude>**/*.sh</exclude>
-                            <exclude>**/pom.xml</exclude>
-                            <exclude>**/Jenkinsfile</exclude>
-                            <exclude>**/Jenkinsfile.*</exclude>
-                            <exclude>**/LICENSE*</exclude>
-                            <exclude>**/*.txt</exclude>
-                            <exclude>**/*.md</exclude>
-                            <exclude>src/test/resources/**</exclude>
-                            <exclude>src/main/resources/**</exclude>
-                        </excludes>
-                    </configuration>
-                </plugin>
-
                 <!-- Google license plugin-->
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
