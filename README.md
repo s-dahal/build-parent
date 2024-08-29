@@ -13,6 +13,36 @@ The output of this project is solely a pom file and is distributed via standard 
 ### Team Ownership - Product Owner
 Automation/Devops Team
 
+## Getting Started
+
+Required for running this:
+
+1. Download and install Open JDK Java 21
+2. Download and install Apache Maven 3.9.8 or later
+3. Download and install Git
+
+## Building and Running
+
+Follow the steps below to build and run Komet on your local machine:
+
+1. Clone the repository from GitHub to your local machine
+
+2. Change local directory to cloned repo location
+
+3. Enter the following command to build the application:
+
+Unix/Linux/OSX:
+
+```bash
+./mvnw clean install
+```
+
+Windows:
+
+```bash
+./mvnw.cmd clean install
+```
+
 ## How to Contribute
 
 For a quick guide on how to make changes to this project, including new features or bug fixes, please click [here](doc/how-to-contribute.md).
