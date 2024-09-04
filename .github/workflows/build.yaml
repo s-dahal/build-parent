@@ -27,17 +27,5 @@ jobs:
         with:
           branch_name: ${{env.BRANCH_NAME}}
 
-      - name: Nexus Release ID Environment (Tag)
-        id: nexusRepoID
-        if: env.IS_TAG == 'true' && github.repository_owner == 'ikmdev'
-        run: |
-          echo "NEXUS_RELEASE_ID=maven-releases" >> $GITHUB_OUTPUT
-      
-      - name: Deploy Artifacts To Nexus
-        if: github.repository_owner == 'ikmdev'
-        uses: ikmdev/maven-nexus-deploy-action@main
-        with:
-          nexus_repo_id: ${{ steps.nexusRepoID.outputs.NEXUS_RELEASE_ID || 'maven-snapshots'}}
-          nexus_repo_password: ${{secrets.EC2_NEXUS_PASSWORD}}
   
   
