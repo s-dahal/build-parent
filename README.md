@@ -14,7 +14,7 @@ The output of this project is solely a pom file and is distributed via standard 
 Automation/Devops Team
 
 ## Issues and Contributions
-Technical and non-technical issues can be reported to the GitHub [Issue Tracker](https://github.com/ikmdev/build-parent/issues).
+Technical and non-technical issues can be reported to the [Issue Tracker](https://github.com/ikmdev/build-parent/issues).
 
 Contributions can be submitted via pull requests. Please check the [contribution guide](doc/how-to-contribute.md) for more details.
 
