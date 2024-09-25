@@ -44,9 +44,8 @@ Windows:
 ```
 
 ## How to Contribute
+=======
+## Issues and Contributions
+Technical and non-technical issues can be reported to the [Issue Tracker](https://github.com/ikmdev/build-parent/issues).
 
-For a quick guide on how to make changes to this project, including new features or bug fixes, please click [here](doc/how-to-contribute.md).
-
-## Test
-
-
+Contributions can be submitted via pull requests. Please check the [contribution guide](doc/how-to-contribute.md) for more details.
