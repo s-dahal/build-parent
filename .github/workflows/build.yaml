@@ -21,7 +21,8 @@ jobs:
         with:
             java-version: '21'
             distribution: 'zulu'
-          
+
+      # Build parent maven clean install    
       - name: Build IKMDEV Code
         uses: ikmdev/maven-clean-install-build-action@v1.1.0
         with:
