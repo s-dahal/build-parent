@@ -87,7 +87,7 @@
         <maven.changes-plugin.version>2.12.1</maven.changes-plugin.version>
 
         <maven.sonarqube.version>3.9.1.2184</maven.sonarqube.version>
-        <maven.github-flow.version>1.20.0</maven.github-flow.version>
+        <maven.github-flow.version>1.21.1-separate-finish-branches-SNAPSHOT</maven.github-flow.version>
 
         <nexus-staging-maven-plugin.version>1.6.13</nexus-staging-maven-plugin.version>
         <build-helper-maven-plugin.version>3.4.0</build-helper-maven-plugin.version>
