@@ -87,7 +87,7 @@
         <maven.changes-plugin.version>2.12.1</maven.changes-plugin.version>
 
         <maven.sonarqube.version>3.9.1.2184</maven.sonarqube.version>
-        <maven.github-flow.version>1.20.0</maven.github-flow.version>
+        <maven.github-flow.version>1.21.1-r4</maven.github-flow.version>
 
         <nexus-staging-maven-plugin.version>1.6.13</nexus-staging-maven-plugin.version>
         <build-helper-maven-plugin.version>3.4.0</build-helper-maven-plugin.version>
@@ -222,22 +222,30 @@
                     <version>${maven.sonarqube.version}</version>
                 </plugin>
 
-                <!-- This plugin is set to help with development and should not be used for releasing -->
+                <!-- This plugin is provided to help with feature development and releasing -->
                 <plugin>
-                    <groupId>com.amashchenko.maven.plugin</groupId>
+                    <groupId>dev.ikm</groupId>
                     <artifactId>gitflow-maven-plugin</artifactId>
                     <version>${maven.github-flow.version}</version>
                     <configuration>
                         <featureNamePattern>^(?!(((feature|hotfix|bugfix))\/(IKM|AR|IAT|IC|IKMC|IKDT|IKMD|IIA|IKMW|IKMM|TE)-\d+(-[0-9A-Za-z\-]*)*)|main|prod|master|dev).*$</featureNamePattern>
-                        <releaseVersion>FAIL-SNAPSHOT</releaseVersion>
+                        <separateFinishBranches>true</separateFinishBranches>
                         <gitFlowConfig>
                             <developmentBranch>main</developmentBranch>
                             <productionBranch>main</productionBranch>
                             <featureBranchPrefix>feature/</featureBranchPrefix>
+                            <finishBranchPrefix>finished/</finishBranchPrefix>
                             <hotfixBranchPrefix>hotfix/</hotfixBranchPrefix>
                             <supportBranchPrefix>support/</supportBranchPrefix>
-                            <releaseBranchPrefix>DO_NOT_USE</releaseBranchPrefix>
+                            <releaseBranchPrefix>release/</releaseBranchPrefix>
                         </gitFlowConfig>
+                        <commitMessages>
+                            <featureStartMessage>Update version to start feature: @{featureName}</featureStartMessage>
+                            <featureFinishMessage>Update version to finish feature: @{featureName}</featureFinishMessage>
+                            <releaseStartMessage>Update release version: @{version}</releaseStartMessage>
+                            <tagReleaseMessage>Tag release: @{version}</tagReleaseMessage>
+                            <releaseFinishMessage>Update development version: @{version}</releaseFinishMessage>
+                        </commitMessages>
                     </configuration>
                 </plugin>
 
@@ -272,13 +280,16 @@
         </pluginManagement>
 
         <plugins>
-
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>license-maven-plugin</artifactId>
                 <configuration>
                     <licenseName>apache_v2</licenseName>
                 </configuration>
+            </plugin>
+             <plugin>
+                <groupId>dev.ikm</groupId>
+                <artifactId>gitflow-maven-plugin</artifactId>
             </plugin>
         </plugins>
     </build>
