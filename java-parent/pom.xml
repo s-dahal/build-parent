@@ -25,10 +25,10 @@
 
         <!-- Default Lifecycle additions -->
         <maven.resources-plugin.version>3.2.0</maven.resources-plugin.version>
-        <maven.surefire-plugin.version>3.2.1</maven.surefire-plugin.version>
-        <maven.surefire-report-plugin.version>3.2.1</maven.surefire-report-plugin.version>
-        <maven.failsafe-plugin.version>3.2.1</maven.failsafe-plugin.version>
-        <maven.surefire-junit-platform.version>3.2.1</maven.surefire-junit-platform.version>
+        <maven.surefire-plugin.version>3.5.2</maven.surefire-plugin.version>
+        <maven.surefire-report-plugin.version>3.5.2</maven.surefire-report-plugin.version>
+        <maven.failsafe-plugin.version>3.5.2</maven.failsafe-plugin.version>
+        <maven.surefire-junit-platform.version>3.5.2</maven.surefire-junit-platform.version>
         <maven.compiler-plugin.version>3.13.0</maven.compiler-plugin.version>
         <maven.jar-plugin.version>3.3.0</maven.jar-plugin.version>
         <maven.war-plugin.version>3.4.0</maven.war-plugin.version>
@@ -222,7 +222,7 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
-                    <useModulePath>false</useModulePath>
+                    <useModulePath>true</useModulePath>
                 </configuration>
             </plugin>
         </plugins>
@@ -406,7 +406,7 @@
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-surefire-plugin</artifactId>
                         <configuration>
-                            <useModulePath>false</useModulePath>
+                            <useModulePath>true</useModulePath>
                             <argLine>${surefireArgLine}</argLine>
                         </configuration>
                     </plugin>
