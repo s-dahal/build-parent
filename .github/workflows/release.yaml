@@ -1,4 +1,5 @@
-name: Release Workflow
+
+name: SemVer Release Workflow
 
 run-name: "Releasing ${{ github.event.repository.name }} #${{github.run_number}}"
 
@@ -6,8 +7,12 @@ run-name: "Releasing ${{ github.event.repository.name }} #${{github.run_number}}
 on:
   workflow_dispatch:
     inputs:
+      release_version:
+        type: string
+        description: "(Optional) Custom Release Version"
+        required: false
       version_type:
-        description: 'Version type to increment'
+        description: 'Development version type to increment'
         required: true
         default: 'minor'
         type: choice
@@ -32,9 +37,14 @@ jobs:
           echo "ERROR: Attempting to release from branch ${{ env.BRANCH_NAME }}. Release from ${{ env.TRUNK_BRANCH_NAME }} branch only."
           exit 1
 
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{secrets.IKMDEVOPS_PAT_TOKEN}}
+
       - name: Shared Release Action
-        uses: ikmdev/maven-semver-release-action@gitflow-plugin-test
+        uses: ikmdev/maven-semver-release-action@v1.0.0
         with:
           version_type: ${{ github.event.inputs.version_type }}
-          ikmdevops_pat: ${{secrets.IKMDEVOPS_PAT_TOKEN}}
           github_token: ${{secrets.GITHUB_TOKEN}}
+          release_version: ${{ github.event.inputs.release_version }}
