@@ -21,7 +21,7 @@
     <properties>
         <!-- make sure to change the hard coded java version in the enforcer as well -->
 
-        <java.version>21</java.version>
+        <java.version>23</java.version>
 
         <!-- Default Lifecycle additions -->
         <maven.resources-plugin.version>3.2.0</maven.resources-plugin.version>
@@ -35,6 +35,10 @@
         <maven-javadoc-plugin.version>3.5.0</maven-javadoc-plugin.version>
         <maven-source-plugin.version>3.3.0</maven-source-plugin.version>
         <maven.resources-plugin.version>3.3.1</maven.resources-plugin.version>
+
+        <!-- Failsafe / Surefire config -->
+        <failsafeArgLine>--enable-preview</failsafeArgLine>
+        <surefireArgLine>--enable-preview</surefireArgLine>
 
         <!-- Compiler Extensions -->
         <record-builder-core.version>34</record-builder-core.version>
@@ -196,6 +200,9 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
                     <release>${java.version}</release>
+                    <compilerArgs>
+                        <arg>--enable-preview</arg>
+                    </compilerArgs>
                     <fork>true</fork>
                     <annotationProcessorPaths>
                         <annotationProcessorPath>
@@ -223,6 +230,16 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
                     <useModulePath>true</useModulePath>
+                    <argLine>${surefireArgLine}</argLine>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <configuration>
+                    <useModulePath>true</useModulePath>
+                    <argLine>${failsafeArgLine}</argLine>
                 </configuration>
             </plugin>
         </plugins>
