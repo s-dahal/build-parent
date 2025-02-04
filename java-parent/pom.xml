@@ -30,9 +30,9 @@
         <maven.failsafe-plugin.version>3.5.2</maven.failsafe-plugin.version>
         <maven.surefire-junit-platform.version>3.5.2</maven.surefire-junit-platform.version>
         <maven.compiler-plugin.version>3.13.0</maven.compiler-plugin.version>
-        <maven.jar-plugin.version>3.3.0</maven.jar-plugin.version>
+        <maven.jar-plugin.version>3.4.2</maven.jar-plugin.version>
         <maven.war-plugin.version>3.4.0</maven.war-plugin.version>
-        <maven-javadoc-plugin.version>3.5.0</maven-javadoc-plugin.version>
+        <maven-javadoc-plugin.version>3.11.2</maven-javadoc-plugin.version>
         <maven-source-plugin.version>3.3.0</maven-source-plugin.version>
         <maven.resources-plugin.version>3.3.1</maven.resources-plugin.version>
 
@@ -45,15 +45,15 @@
         <auto-service.version>1.0.1</auto-service.version>
 
         <!-- Style and Code Quality Check Plugins -->
-        <maven.checkstyle-plugin.version>3.3.0</maven.checkstyle-plugin.version>
-        <checkstyle.version>10.12.2</checkstyle.version>
+        <maven.checkstyle-plugin.version>3.6.0</maven.checkstyle-plugin.version>
+        <checkstyle.version>10.21.2</checkstyle.version>
         <maven-pmd-plugin.version>3.26.0</maven-pmd-plugin.version>
-        <maven.jacoco-plugin.version>0.8.11</maven.jacoco-plugin.version>
-        <maven.spotbugs-plugin.version>4.7.3.6</maven.spotbugs-plugin.version>
+        <maven.jacoco-plugin.version>0.8.12</maven.jacoco-plugin.version>
+        <maven.spotbugs-plugin.version>4.8.6.6</maven.spotbugs-plugin.version>
         <jlgrock.checkstyle.version>2.1.0</jlgrock.checkstyle.version>
         <maven.pom-check-maven-plugin.version>1.0.0</maven.pom-check-maven-plugin.version>
-        <junit.version>5.10.0</junit.version>
-        <slf4j.version>2.0.13</slf4j.version>
+        <junit.version>5.11.4</junit.version>
+        <slf4j.version>2.0.16</slf4j.version>
 
         <eclipse-plugin.version>1.0.0</eclipse-plugin.version>
     </properties>
