@@ -57,42 +57,42 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
         <!-- Clean Lifecycle -->
-        <maven.clean-plugin.version>3.1.0</maven.clean-plugin.version>
+        <maven.clean-plugin.version>3.4.0</maven.clean-plugin.version>
 
         <!-- POM Lifecycle -->
-        <maven.plugin-plugin.version>3.6.1</maven.plugin-plugin.version>
-        <maven.install-plugin.version>3.1.1</maven.install-plugin.version>
-        <maven.deploy-plugin.version>3.1.1</maven.deploy-plugin.version>
+        <maven.plugin-plugin.version>3.15.1</maven.plugin-plugin.version>
+        <maven.install-plugin.version>3.1.3</maven.install-plugin.version>
+        <maven.deploy-plugin.version>3.1.3</maven.deploy-plugin.version>
 
         <!-- Site Lifecycle -->
         <maven.site.plugin>3.9.1</maven.site.plugin>
         <maven.versions.plugin>2.18.0</maven.versions.plugin>
-        <maven.project-info-reports-plugin.version>3.4.5</maven.project-info-reports-plugin.version>
+        <maven.project-info-reports-plugin.version>3.8.0</maven.project-info-reports-plugin.version>
 
         <!-- Command Line tooling -->
-        <maven.dependency-plugin.version>3.6.0</maven.dependency-plugin.version>
+        <maven.dependency-plugin.version>3.8.1</maven.dependency-plugin.version>
         <maven.assembly-plugin.version>3.7.1</maven.assembly-plugin.version>
         <maven.assembly.version>${maven.assembly-plugin.version}</maven.assembly.version>
-        <maven.wrapper-plugin.version>3.2.0</maven.wrapper-plugin.version>
+        <maven.wrapper-plugin.version>3.3.2</maven.wrapper-plugin.version>
 
         <!-- Release plugins -->
-        <maven.gpg-plugin.version>3.1.0</maven.gpg-plugin.version>
-        <maven.enforcer-plugin.version>3.3.0</maven.enforcer-plugin.version>
+        <maven.gpg-plugin.version>3.2.7</maven.gpg-plugin.version>
+        <maven.enforcer-plugin.version>3.5.0</maven.enforcer-plugin.version>
         <semver-enforcer-rule.version>0.9.33</semver-enforcer-rule.version>
         <maven.directory.plugin>1.0</maven.directory.plugin>
         <!-- Google license plugin-->
         <maven-license-plugin.version>4.1</maven-license-plugin.version>
         <!-- Mojohaus license plugin-->
-        <maven-mojo-license-plugin.version>2.2.0</maven-mojo-license-plugin.version>
+        <maven-mojo-license-plugin.version>2.5.0</maven-mojo-license-plugin.version>
         <maven.changes-plugin.version>2.12.1</maven.changes-plugin.version>
 
-        <maven.sonarqube.version>3.9.1.2184</maven.sonarqube.version>
+        <maven.sonarqube.version>5.0.0.4389</maven.sonarqube.version>
         <maven.github-flow.version>1.21.1-r4</maven.github-flow.version>
 
-        <nexus-staging-maven-plugin.version>1.6.13</nexus-staging-maven-plugin.version>
-        <build-helper-maven-plugin.version>3.4.0</build-helper-maven-plugin.version>
-        <maven-javadoc-plugin.version>3.5.0</maven-javadoc-plugin.version>
-        <maven-source-plugin.version>3.3.0</maven-source-plugin.version>
+        <nexus-staging-maven-plugin.version>1.7.0</nexus-staging-maven-plugin.version>
+        <build-helper-maven-plugin.version>3.6.0</build-helper-maven-plugin.version>
+        <maven-javadoc-plugin.version>3.11.2</maven-javadoc-plugin.version>
+        <maven-source-plugin.version>3.3.1</maven-source-plugin.version>
 
         <maven.antrun.plugin>3.1.0</maven.antrun.plugin>
 
