@@ -17,8 +17,8 @@ Automation/Devops Team
 
 Required for running this:
 
-1. Download and install Open JDK Java 21
-2. Download and install Apache Maven 3.9.8 or later
+1. Download and install Open JDK Java 23 (Azul preferred)
+2. Download and install Apache Maven 3.9.9 or later
 3. Download and install Git
 
 ## Building and Running
