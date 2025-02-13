@@ -56,6 +56,11 @@
         <project.build.resourceEncoding>UTF-8</project.build.resourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
+        <!-- Java and Maven versions -->
+        <java.version>23</java.version>
+        <maven.version>3.9.9</maven.version>
+
+
         <!-- Clean Lifecycle -->
         <maven.clean-plugin.version>3.4.0</maven.clean-plugin.version>
 
@@ -194,6 +199,19 @@
                                     <requireMavenVersion>
                                         <version>(3.9,)</version>
                                     </requireMavenVersion>
+                                </rules>    
+                            </configuration>
+                        </execution>
+                        <execution>
+                            <id>enforce-java</id>
+                            <goals>
+                                <goal>enforce</goal>
+                            </goals>
+                            <configuration>
+                                <rules>
+                                    <requireJavaVersion>
+                                        <version>${java.version}</version>
+                                    </requireJavaVersion>
                                 </rules>    
                             </configuration>
                         </execution>
@@ -517,6 +535,32 @@
                                         </requireProperty>
                                     </rules>
                                     <fail>true</fail>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>enforce-maven</id>
+                                <goals>
+                                    <goal>enforce</goal>
+                                </goals>
+                                <configuration>
+                                    <rules>
+                                        <requireMavenVersion>
+                                            <version>(3.9,)</version>
+                                        </requireMavenVersion>
+                                    </rules>    
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>enforce-java</id>
+                                <goals>
+                                    <goal>enforce</goal>
+                                </goals>
+                                <configuration>
+                                    <rules>
+                                        <requireJavaVersion>
+                                            <version>${java.version}</version>
+                                        </requireJavaVersion>
+                                    </rules>    
                                 </configuration>
                             </execution>
                         </executions>
