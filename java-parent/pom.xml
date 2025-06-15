@@ -36,10 +36,6 @@
         <maven-source-plugin.version>3.3.0</maven-source-plugin.version>
         <maven.resources-plugin.version>3.3.1</maven.resources-plugin.version>
 
-        <!-- Failsafe / Surefire config -->
-        <failsafeArgLine>--enable-preview</failsafeArgLine>
-        <surefireArgLine>--enable-preview</surefireArgLine>
-
         <!-- Compiler Extensions -->
         <record-builder-core.version>34</record-builder-core.version>
         <auto-service.version>1.0.1</auto-service.version>
@@ -56,6 +52,9 @@
         <slf4j.version>2.0.17</slf4j.version>
 
         <eclipse-plugin.version>1.0.0</eclipse-plugin.version>
+
+        <surefireArgLine></surefireArgLine> <!-- surefireArgLine must be present even if blank to avoid errors -->
+        <failsafeArgLine></failsafeArgLine> <!-- failsafeArgLine must be present even if blank to avoid errors -->
     </properties>
 
     <dependencyManagement>
@@ -97,12 +96,20 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>${maven.surefire-plugin.version}</version>
+                    <configuration>
+                        <useModulePath>true</useModulePath> <!-- default is true, just being explicit -->
+                        <argLine>@{failsafeArgLine}</argLine> <!-- Sets the VM argument line used when integration tests are run -->
+                    </configuration>
                 </plugin>
 
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-failsafe-plugin</artifactId>
                     <version>${maven.failsafe-plugin.version}</version>
+                    <configuration>
+                        <useModulePath>true</useModulePath> <!-- default is true, just being explicit -->
+                        <argLine>@{failsafeArgLine}</argLine> <!-- Sets the VM argument line used when integration tests are run -->
+                    </configuration>
                 </plugin>
 
                 <plugin>
@@ -194,15 +201,11 @@
         </pluginManagement>
 
         <plugins>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
                     <release>${java.version}</release>
-                    <compilerArgs>
-                        <arg>--enable-preview</arg>
-                    </compilerArgs>
                     <fork>true</fork>
                     <annotationProcessorPaths>
                         <annotationProcessorPath>
@@ -228,19 +231,11 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <configuration>
-                    <useModulePath>true</useModulePath>
-                    <argLine>${surefireArgLine}</argLine>
-                </configuration>
             </plugin>
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
-                <configuration>
-                    <useModulePath>true</useModulePath>
-                    <argLine>${failsafeArgLine}</argLine>
-                </configuration>
             </plugin>
         </plugins>
     </build>
@@ -422,10 +417,6 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-surefire-plugin</artifactId>
-                        <configuration>
-                            <useModulePath>true</useModulePath>
-                            <argLine>${surefireArgLine}</argLine>
-                        </configuration>
                     </plugin>
 
                     <!-- Turn on the failsafe plugin as part of the integration test in the build lifecycle -->
@@ -451,9 +442,6 @@
                         <configuration>
                             <forkCount>0.5C</forkCount>
                             <reuseForks>false</reuseForks>
-                            <useModulePath>true</useModulePath> <!-- default is true, just being explicit -->
-                            <!-- Sets the VM argument line used when integration tests are run. -->
-                            <argLine>${failsafeArgLine}</argLine>
                         </configuration>
                     </plugin>
 
