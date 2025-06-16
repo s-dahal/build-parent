@@ -102,7 +102,7 @@
                     <version>${maven.surefire-plugin.version}</version>
                     <configuration>
                         <useModulePath>true</useModulePath> <!-- default is true, just being explicit -->
-                        <argLine>@{failsafeArgLine}</argLine> <!-- Sets the VM argument line used when integration tests are run -->
+                        <argLine>@{surefireArgLine}</argLine> <!-- Sets the VM argument line used when unit tests are run -->
                     </configuration>
                 </plugin>
 
