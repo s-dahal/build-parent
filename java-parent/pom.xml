@@ -50,6 +50,7 @@
         <maven.pom-check-maven-plugin.version>1.0.0</maven.pom-check-maven-plugin.version>
         <junit.version>5.12.2</junit.version>
         <slf4j.version>2.0.17</slf4j.version>
+        <log4j.version>3.0.0-alpha1</log4j.version>
 
         <eclipse-plugin.version>1.0.0</eclipse-plugin.version>
 
@@ -68,14 +69,17 @@
             </dependency>
             <dependency>
                 <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-api</artifactId>
+                <artifactId>slf4j-bom</artifactId>
                 <version>${slf4j.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
             <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-simple</artifactId>
-                <version>${slf4j.version}</version>
-                <scope>test</scope>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-bom</artifactId>
+                <version>${log4j.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
