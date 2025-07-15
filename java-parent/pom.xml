@@ -43,7 +43,7 @@
         <!-- Style and Code Quality Check Plugins -->
         <maven.checkstyle-plugin.version>3.6.0</maven.checkstyle-plugin.version>
         <checkstyle.version>10.23.1</checkstyle.version>
-        <maven-pmd-plugin.version>3.26.0</maven-pmd-plugin.version>
+        <maven-pmd-plugin.version>3.27.0</maven-pmd-plugin.version>
         <maven.jacoco-plugin.version>0.8.13</maven.jacoco-plugin.version>
         <maven.spotbugs-plugin.version>4.9.3.0</maven.spotbugs-plugin.version>
         <jlgrock.checkstyle.version>2.1.0</jlgrock.checkstyle.version>
