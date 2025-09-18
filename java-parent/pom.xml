@@ -219,9 +219,6 @@
                                     <ignoredUnusedDeclaredDependency>org.slf4j:*</ignoredUnusedDeclaredDependency>
                                 </ignoredUnusedDeclaredDependencies>
                                 <ignoreUnusedRuntime>true</ignoreUnusedRuntime>
-                                <ignoredUsedUndeclaredDependencies>
-                                    <ignoredUsedUndeclaredDependency>dev.ikm.jpms:eclipse-collections-api</ignoredUsedUndeclaredDependency>
-                                </ignoredUsedUndeclaredDependencies>
                             </configuration>
                         </execution>
                     </executions>
